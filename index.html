@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Virtual Lab – Fourier Series</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --bg:#f0f4ff;--surface:#ffffff;--surface2:#e8edf8;
+  --navy:#1a2456;--mid:#2e4db3;--accent:#c0392b;
+  --gold:#c47d0a;--green:#1e8449;--blue:#1a6bb5;
+  --text:#1e2d45;--muted:#5a6a85;--border:#cdd5e8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* HEADER */
+header{background:var(--surface);border-bottom:3px solid var(--accent);
+  padding:14px 40px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(26,36,86,.1);}
+.logo-row{display:flex;align-items:center;gap:16px;}
+.logo-badge{width:50px;height:50px;background:var(--surface);border-radius:10px;
+  border:1px solid var(--border);display:grid;place-items:center;overflow:hidden;}
+.logo-badge img{width:100%;height:100%;object-fit:contain;}
+.logo-text .l1{font-family:'Playfair Display',serif;font-size:13.5px;color:var(--navy);font-weight:700;}
+.logo-text .l2{font-size:11px;color:var(--muted);margin-top:2px;}
+.user-pill{display:flex;align-items:center;gap:8px;background:var(--surface2);
+  border:1px solid var(--border);padding:8px 16px;border-radius:50px;font-size:13px;color:var(--mid);}
+.user-pill i{color:var(--accent);}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--mid) 100%);
+  text-align:center;padding:64px 20px 54px;position:relative;overflow:hidden;}
+.hero::before{content:'∫';position:absolute;font-size:340px;font-family:'Playfair Display',serif;
+  color:rgba(255,255,255,.05);top:-50px;left:50%;transform:translateX(-50%);pointer-events:none;line-height:1;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,50px);color:#fff;line-height:1.15;margin-bottom:12px;}
+.hero h1 span{color:#fbbf24;}
+.hero p{color:rgba(255,255,255,.75);font-size:15.5px;max-width:520px;margin:0 auto;}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:20px;max-width:1100px;margin:50px auto 60px;padding:0 30px;}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;
+  padding:28px 20px 24px;text-align:center;cursor:pointer;
+  transition:transform .22s,box-shadow .22s,border-color .22s;
+  text-decoration:none;color:var(--text);display:block;
+  box-shadow:0 2px 8px rgba(26,36,86,.06);}
+.card:hover{transform:translateY(-5px);border-color:var(--accent);
+  box-shadow:0 10px 32px rgba(192,57,43,.14);}
+.card-icon{width:56px;height:56px;border-radius:14px;background:rgba(192,57,43,.07);
+  display:grid;place-items:center;margin:0 auto 16px;
+  border:1.5px solid rgba(192,57,43,.18);font-size:22px;color:var(--accent);}
+.card h3{font-family:'Playfair Display',serif;font-size:16px;color:var(--navy);margin-bottom:6px;}
+.card p{font-size:12px;color:var(--muted);line-height:1.5;}
+
+footer{text-align:center;padding:22px;font-size:12.5px;color:var(--muted);border-top:1.5px solid var(--border);}
+footer span{color:var(--accent);font-weight:500;}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo-row">
+    <div class="logo-badge"><img src="https://raw.githubusercontent.com/dineshkute90/virtual_lab_LAUC/main/pccoe.png" alt="PCOE" onerror="this.src='https://via.placeholder.com/50x50/1a2456/fff?text=P'"></div>
+    <div class="logo-text"><div class="l1">APPLIED SCIENCES &amp; HUMANITIES</div><div class="l2">Pimpri Chinchwad College of Engineering</div></div>
+  </div>
+  <div class="user-pill"><i class="fas fa-user-circle"></i> Welcome, Student</div>
+</header>
+<section class="hero">
+  <h1>Virtual Lab on<br><span>Fourier Series</span></h1>
+  <p>Engineering Mathematics Experiment — Interactive Learning Platform</p>
+</section>
+<div class="grid">
+  <a href="aim.html" class="card"><div class="card-icon"><i class="fas fa-bullseye"></i></div><h3>Aim</h3><p>Objective of the experiment</p></a>
+  <a href="theory.html" class="card"><div class="card-icon"><i class="fas fa-book"></i></div><h3>Theory</h3><p>Background concepts &amp; definitions</p></a>
+  <a href="formulasheet.html" class="card"><div class="card-icon"><i class="fas fa-superscript"></i></div><h3>Formula Sheet</h3><p>Key integration formulas</p></a>
+  <a href="pretest.html" class="card"><div class="card-icon"><i class="fas fa-pencil-alt"></i></div><h3>Pre Test</h3><p>Assess your knowledge before the experiment</p></a>
+  <a href="topic.html" class="card"><div class="card-icon"><i class="fas fa-wave-square"></i></div><h3>Simulation</h3><p>Step-by-step Fourier solver with graphs</p></a>
+  <a href="posttest.html" class="card"><div class="card-icon"><i class="fas fa-clipboard-check"></i></div><h3>Post Test</h3><p>Fourier Series MCQ after the experiment</p></a>
+  <a href="refernces.html" class="card"><div class="card-icon"><i class="fas fa-book-open"></i></div><h3>References</h3><p>Further reading materials</p></a>
+  <a href="contributors.html" class="card"><div class="card-icon"><i class="fas fa-users"></i></div><h3>Contributors</h3><p>People involved in this project</p></a>
+  <a href="feedback.html" class="card"><div class="card-icon"><i class="fas fa-comment-alt"></i></div><h3>Feedback</h3><p>Share your experience with us</p></a>
+</div>
+<footer>Virtual Labs &copy; 2025 &nbsp;|&nbsp; Applied Sciences &amp; Humanities &nbsp;|&nbsp; <span>Pimpri Chinchwad College of Engineering</span></footer>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Aim – Fourier Series Virtual Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--bg:#f0f4ff;--surface:#ffffff;--surface2:#e8edf8;--surface3:#dde4f5;--navy:#1a2456;--mid:#2e4db3;--accent:#c0392b;--gold:#c47d0a;--green:#1e8449;--blue:#1a6bb5;--text:#1e2d45;--muted:#5a6a85;--border:#cdd5e8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+header{background:var(--surface);border-bottom:3px solid var(--accent);padding:14px 36px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;box-shadow:0 2px 12px rgba(26,36,86,.09);}
+.logo-row{display:flex;align-items:center;gap:14px;}
+.logo-badge{width:46px;height:46px;background:var(--surface);border-radius:9px;border:1px solid var(--border);display:grid;place-items:center;overflow:hidden;}
+.logo-badge img{width:100%;height:100%;object-fit:contain;}
+.logo-text .l1{font-family:'Playfair Display',serif;font-size:13px;color:var(--navy);font-weight:700;}
+.logo-text .l2{font-size:10px;color:var(--muted);}
+.back-btn{display:flex;align-items:center;gap:8px;background:rgba(192,57,43,.07);border:1.5px solid rgba(192,57,43,.28);color:var(--accent);padding:8px 16px;border-radius:50px;text-decoration:none;font-size:13px;transition:.2s;}
+.back-btn:hover{background:rgba(192,57,43,.15);}
+.page{max-width:860px;margin:0 auto;padding:44px 28px 70px;}
+.page-title{font-family:'Playfair Display',serif;font-size:36px;color:var(--navy);margin-bottom:6px;}
+.page-title span{color:var(--accent);}
+.divider{width:60px;height:3px;background:var(--accent);border-radius:3px;margin-bottom:32px;}
+.prose{font-size:16px;line-height:1.7;color:#3a4a65;margin-bottom:18px;text-align:justify;}
+.prose b{color:var(--navy);}
+footer{text-align:center;padding:22px;font-size:12px;color:var(--muted);border-top:1.5px solid var(--border);}
+footer span{color:var(--accent);font-weight:500;}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo-row">
+    <div class="logo-badge"><img src="https://raw.githubusercontent.com/dineshkute90/virtual_lab_LAUC/main/pccoe.png" alt="PCOE" onerror="this.src='https://via.placeholder.com/46x46/1a2456/fff?text=P'"></div>
+    <div class="logo-text"><div class="l1">APPLIED SCIENCES &amp; HUMANITIES</div><div class="l2">Pimpri Chinchwad College of Engineering</div></div>
+  </div>
+  <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Home</a>
+</header>
+<div class="page">
+  <div class="page-title">Aim</div>
+  <div class="divider"></div>
+  <div class="prose">
+    <p>To understand the Fourier series representation of periodic functions and compute Fourier coefficients. To analyze how any periodic signal can be decomposed into sine and cosine components, and visualize the convergence of partial sums. The virtual lab bridges theory with practical applications in vibrations, heat transfer, and signal processing.</p>
+  </div>
+</div>
+<footer>Virtual Labs &copy; 2025 &nbsp;|&nbsp; <span>Pimpri Chinchwad College of Engineering</span></footer>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Contributors – Fourier Series Virtual Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--bg:#f0f4ff;--surface:#fff;--surface2:#e8edf8;--navy:#1a2456;--mid:#2e4db3;--accent:#c0392b;--gold:#b06c0a;--text:#1e2d45;--muted:#5a6a85;--border:#cdd5e8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+header{background:var(--surface);border-bottom:3px solid var(--accent);padding:14px 36px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;box-shadow:0 2px 12px rgba(26,36,86,.09);}
+.logo-row{display:flex;align-items:center;gap:14px;}
+.logo-badge{width:46px;height:46px;background:var(--surface);border-radius:9px;border:1px solid var(--border);display:grid;place-items:center;overflow:hidden;}
+.logo-badge img{width:100%;height:100%;object-fit:contain;}
+.logo-text .l1{font-family:'Playfair Display',serif;font-size:13px;color:var(--navy);font-weight:700;}
+.logo-text .l2{font-size:10px;color:var(--muted);}
+.back-btn{display:flex;align-items:center;gap:8px;background:rgba(192,57,43,.07);border:1.5px solid rgba(192,57,43,.28);color:var(--accent);padding:8px 16px;border-radius:50px;text-decoration:none;font-size:13px;transition:.2s;}
+.back-btn:hover{background:rgba(192,57,43,.15);}
+.page{max-width:900px;margin:0 auto;padding:44px 28px 70px;}
+.page-title{font-family:'Playfair Display',serif;font-size:38px;color:var(--navy);margin-bottom:6px;}
+.page-title span{color:var(--accent);}
+.divider{width:60px;height:3px;background:var(--accent);border-radius:3px;margin-bottom:36px;}
+.cards{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin-bottom:36px;}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:26px 20px;text-align:center;width:170px;box-shadow:0 2px 8px rgba(26,36,86,.06);transition:.25s;}
+.card:hover{transform:translateY(-5px);border-color:var(--accent);box-shadow:0 10px 28px rgba(192,57,43,.12);}
+.avatar{width:80px;height:80px;border-radius:50%;object-fit:cover;margin:0 auto 14px;border:2px solid var(--border);background:var(--surface2);display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:14.5px;color:var(--navy);margin-bottom:5px;}
+.card p{font-size:12px;color:var(--gold);font-weight:600;}
+.section-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--navy);margin-bottom:20px;text-align:center;}
+.guide-wrap{display:flex;justify-content:center;}
+.guide-card{background:var(--surface);border:1.5px solid var(--border);border-left:4px solid var(--accent);border-radius:16px;padding:24px 28px;display:flex;align-items:center;gap:22px;max-width:380px;box-shadow:0 2px 8px rgba(26,36,86,.06);}
+.guide-card .avatar{margin:0;width:76px;height:76px;flex-shrink:0;}
+.guide-card .info h3{font-family:'Playfair Display',serif;font-size:17px;color:var(--navy);margin-bottom:4px;}
+.guide-card .info p{font-size:12.5px;color:var(--gold);font-weight:600;}
+footer{text-align:center;padding:22px;font-size:12px;color:var(--muted);border-top:1.5px solid var(--border);}
+footer span{color:var(--accent);font-weight:500;}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo-row">
+    <div class="logo-badge"><img src="https://raw.githubusercontent.com/dineshkute90/virtual_lab_LAUC/main/pccoe.png" alt="PCOE" onerror="this.src='https://via.placeholder.com/46x46/1a2456/fff?text=P'"></div>
+    <div class="logo-text"><div class="l1">APPLIED SCIENCES &amp; HUMANITIES</div><div class="l2">Pimpri Chinchwad College of Engineering</div></div>
+  </div>
+  <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Home</a>
+</header>
+<div class="page">
+  <div class="page-title">Project <span>Contributors</span></div>
+  <div class="divider"></div>
+  <div class="cards">
+    <div class="card"><img class="avatar" src="kashish.jpeg" alt="Kashish Jangid" onerror="this.src='https://via.placeholder.com/80x80/e8edf8/1a2456?text=KJ'"><h3>Kashish Jangid</h3><p>Project Lead</p></div>
+    <div class="card"><img class="avatar" src="Aayusha.jpeg" alt="Aayusha Chalke" onerror="this.src='https://via.placeholder.com/80x80/e8edf8/1a2456?text=AC'"><h3>Aayusha Chalke</h3><p>Project Lead</p></div>
+    <div class="card"><img class="avatar" src="Aryan.jpeg" alt="Aryan Ghate" onerror="this.src='https://via.placeholder.com/80x80/e8edf8/1a2456?text=AG'"><h3>Aryan Ghate</h3><p>Design &amp; Layout</p></div>
+    <div class="card"><img class="avatar" src="sandesh.jpeg" alt="Sandesh Gawade" onerror="this.src='https://via.placeholder.com/80x80/e8edf8/1a2456?text=SG'"><h3>Sandesh Gawade</h3><p>Code &amp; Testing</p></div>
+    <div class="card"><img class="avatar" src="" alt="Onkar Jamare" onerror="this.src='https://via.placeholder.com/80x80/e8edf8/1a2456?text=OJ'"><h3>Onkar Jamare</h3><p>Documentation &amp; Research</p></div>
+  </div>
+  <div class="section-title">Guided By</div>
+  <div class="guide-wrap">
+    <div class="guide-card">
+      <img class="avatar" src="nehasharma.jpeg" alt="Neha Sharma" onerror="this.src='https://via.placeholder.com/76x76/e8edf8/b06c0a?text=NS'">
+      <div class="info"><h3>Neha Sharma</h3><p>Project Guide</p></div>
+    </div>
+  </div>
+</div>
+<footer>Virtual Labs &copy; 2025 &nbsp;|&nbsp; <span>Pimpri Chinchwad College of Engineering</span></footer>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Feedback – Fourier Series Virtual Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--bg:#f0f4ff;--surface:#fff;--surface2:#e8edf8;--navy:#1a2456;--mid:#2e4db3;--accent:#c0392b;--green:#1a7a40;--text:#1e2d45;--muted:#5a6a85;--border:#cdd5e8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+header{background:var(--surface);border-bottom:3px solid var(--accent);padding:14px 36px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;box-shadow:0 2px 12px rgba(26,36,86,.09);}
+.logo-row{display:flex;align-items:center;gap:14px;}
+.logo-badge{width:46px;height:46px;background:var(--surface);border-radius:9px;border:1px solid var(--border);display:grid;place-items:center;overflow:hidden;}
+.logo-badge img{width:100%;height:100%;object-fit:contain;}
+.logo-text .l1{font-family:'Playfair Display',serif;font-size:13px;color:var(--navy);font-weight:700;}
+.logo-text .l2{font-size:10px;color:var(--muted);}
+.back-btn{display:flex;align-items:center;gap:8px;background:rgba(192,57,43,.07);border:1.5px solid rgba(192,57,43,.28);color:var(--accent);padding:8px 16px;border-radius:50px;text-decoration:none;font-size:13px;transition:.2s;}
+.back-btn:hover{background:rgba(192,57,43,.15);}
+.page{max-width:620px;margin:0 auto;padding:44px 24px 70px;}
+.page-title{font-family:'Playfair Display',serif;font-size:38px;color:var(--navy);margin-bottom:6px;}
+.page-title span{color:var(--accent);}
+.divider{width:60px;height:3px;background:var(--accent);border-radius:3px;margin-bottom:32px;}
+.form-card{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:32px 36px;box-shadow:0 2px 10px rgba(26,36,86,.07);}
+.field{margin-bottom:20px;}
+.field label{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px;font-weight:600;}
+.field input,.field textarea,.field select{width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;padding:11px 14px;color:var(--text);font-size:15px;font-family:'DM Sans',sans-serif;outline:none;transition:.2s;}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--mid);background:#fff;}
+.field textarea{height:120px;resize:none;}
+.field select option{background:#fff;color:var(--text);}
+.btn-submit{width:100%;background:var(--accent);color:#fff;border:none;border-radius:9px;padding:13px;font-size:16px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:.2s;margin-top:8px;}
+.btn-submit:hover{background:#a93226;}
+.thankyou{display:none;margin-top:22px;padding:18px;background:rgba(26,122,64,.08);border:1.5px solid rgba(26,122,64,.3);border-radius:10px;text-align:center;color:var(--green);font-size:15px;font-weight:500;}
+footer{text-align:center;padding:22px;font-size:12px;color:var(--muted);border-top:1.5px solid var(--border);margin-top:40px;}
+footer span{color:var(--accent);font-weight:500;}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo-row">
+    <div class="logo-badge"><img src="https://raw.githubusercontent.com/dineshkute90/virtual_lab_LAUC/main/pccoe.png" alt="PCOE" onerror="this.src='https://via.placeholder.com/46x46/1a2456/fff?text=P'"></div>
+    <div class="logo-text"><div class="l1">APPLIED SCIENCES &amp; HUMANITIES</div><div class="l2">Pimpri Chinchwad College of Engineering</div></div>
+  </div>
+  <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Home</a>
+</header>
+<div class="page">
+  <div class="page-title">Share <span>Feedback</span></div>
+  <div class="divider"></div>
+  <div class="form-card">
+    <form id="feedbackForm" action="https://formspree.io/f/mgoevnad" method="POST">
+      <div class="field"><label>Student Name</label><input type="text" name="name" placeholder="Enter your name" required></div>
+      <div class="field"><label>Class / Department</label><input type="text" name="class" placeholder="Enter your class" required></div>
+      <div class="field"><label>Overall Rating</label>
+        <select name="rating" required><option>Excellent</option><option>Good</option><option>Average</option><option>Poor</option></select>
+      </div>
+      <div class="field"><label>Feedback Message</label><textarea name="feedback" placeholder="Write your feedback here..." required></textarea></div>
+      <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> &nbsp;Submit Feedback</button>
+    </form>
+    <div class="thankyou" id="thankyou"><i class="fas fa-check-circle"></i> &nbsp; Thank you for your valuable feedback!</div>
+  </div>
+</div>
+<footer>Virtual Labs &copy; 2025 &nbsp;|&nbsp; <span>Pimpri Chinchwad College of Engineering</span></footer>
+<script>
+document.getElementById('feedbackForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  fetch(this.action,{method:'POST',body:new FormData(this),headers:{'Accept':'application/json'}})
+  .then(r=>{if(r.ok){this.style.display='none';document.getElementById('thankyou').style.display='block';}});
+});
+</script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Formula Sheet – Fourier Series Virtual Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+:root{--bg:#f0f4ff;--surface:#ffffff;--surface2:#e8edf8;--navy:#1a2456;--mid:#2e4db3;--accent:#c0392b;--gold:#c47d0a;--text:#1e2d45;--muted:#5a6a85;--border:#cdd5e8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+header{background:var(--surface);border-bottom:3px solid var(--accent);padding:14px 36px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;box-shadow:0 2px 12px rgba(26,36,86,.09);}
+.logo-row{display:flex;align-items:center;gap:14px;}
+.logo-badge{width:46px;height:46px;background:var(--surface);border-radius:9px;border:1px solid var(--border);display:grid;place-items:center;overflow:hidden;}
+.logo-badge img{width:100%;height:100%;object-fit:contain;}
+.logo-text .l1{font-family:'Playfair Display',serif;font-size:13px;color:var(--navy);font-weight:700;}
+.logo-text .l2{font-size:10px;color:var(--muted);}
+.back-btn{display:flex;align-items:center;gap:8px;background:rgba(192,57,43,.07);border:1.5px solid rgba(192,57,43,.28);color:var(--accent);padding:8px 16px;border-radius:50px;text-decoration:none;font-size:13px;transition:.2s;}
+.back-btn:hover{background:rgba(192,57,43,.15);}
+.page{max-width:880px;margin:0 auto;padding:44px 28px 70px;}
+.page-title{font-family:'Playfair Display',serif;font-size:36px;color:var(--navy);margin-bottom:6px;}
+.page-title span{color:var(--accent);}
+.divider{width:60px;height:3px;background:var(--accent);border-radius:3px;margin-bottom:36px;}
+.formula-card{background:var(--surface);border:1.5px solid var(--border);border-left:4px solid var(--mid);border-radius:12px;padding:22px 26px;margin-bottom:16px;box-shadow:0 2px 8px rgba(26,36,86,.05);transition:.2s;}
+.formula-card:hover{border-left-color:var(--accent);box-shadow:0 4px 16px rgba(192,57,43,.1);}
+.num{font-size:10px;color:var(--mid);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;font-weight:700;display:flex;align-items:center;gap:8px;}
+.num::after{content:'';flex:1;height:1px;background:var(--border);}
+.formula-body{text-align:center;font-size:16px;color:var(--text);line-height:2.4;}
+.formula-note{font-size:12.5px;color:var(--muted);margin-top:8px;font-style:italic;text-align:center;}
+footer{text-align:center;padding:22px;font-size:12px;color:var(--muted);border-top:1.5px solid var(--border);}
+footer span{color:var(--accent);font-weight:500;}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo-row">
+    <div class="logo-badge"><img src="https://raw.githubusercontent.com/dineshkute90/virtual_lab_LAUC/main/pccoe.png" alt="PCOE" onerror="this.src='https://via.placeholder.com/46x46/1a2456/fff?text=P'"></div>
+    <div class="logo-text"><div class="l1">APPLIED SCIENCES &amp; HUMANITIES</div><div class="l2">Pimpri Chinchwad College of Engineering</div></div>
+  </div>
+  <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Home</a>
+</header>
+<div class="page">
+  <div class="page-title">Formula <span>Sheet</span></div>
+  <div class="divider"></div>
+
+  <div class="formula-card">
+    <div class="num">Formula 1 — Integration by Parts</div>
+    <div class="formula-body">\(\displaystyle\int u\,v\,dx = u\,v_1 - u'v_2 + u''v_3 - u'''v_4 + \cdots\)</div>
+    <div class="formula-note">Dashes = differentiation; subscripts = repeated integration.</div>
+    <div class="formula-body" style="margin-top:12px;font-size:13.5px;">Example: \(\displaystyle\int(\pi^2-x^2)\cos nx\,dx = (\pi^2-x^2)\frac{\sin nx}{n} - (-2x)\!\left(-\frac{\cos nx}{n^2}\right) + (-2)\!\left(-\frac{\sin nx}{n^3}\right)\)</div>
+  </div>
+
+  <div class="formula-card">
+    <div class="num">Formula 2 — Exponential × Trigonometric</div>
+    <div class="formula-body">
+      \((i)\;\displaystyle\int e^{ax}\sin bx\,dx = \frac{e^{ax}}{a^2+b^2}(a\sin bx - b\cos bx)\)<br>
+      \((ii)\;\displaystyle\int e^{ax}\cos bx\,dx = \frac{e^{ax}}{a^2+b^2}(a\cos bx + b\sin bx)\)
+    </div>
+  </div>
+
+  <div class="formula-card">
+    <div class="num">Formula 3 — Product-to-Sum</div>
+    <div class="formula-body">
+      \((i)\;2\sin A\cos B = \sin(A+B)+\sin(A-B)\)<br>
+      \((ii)\;2\cos A\sin B = \sin(A+B)-\sin(A-B)\)<br>
+      \((iii)\;2\cos A\cos B = \cos(A+B)+\cos(A-B)\)<br>
+      \((iv)\;2\sin A\sin B = \cos(A-B)-\cos(A+B)\)
+    </div>
+  </div>
+
+  <div class="formula-card">
+    <div class="num">Formula 4 — Sum-to-Product</div>
+    <div class="formula-body">
+      \((i)\;\sin A+\sin B = 2\sin\dfrac{A+B}{2}\cos\dfrac{A-B}{2}\)<br>
+      \((ii)\;\sin A-\sin B = 2\cos\dfrac{A+B}{2}\sin\dfrac{A-B}{2}\)<br>
+      \((iii)\;\cos A+\cos B = 2\cos\dfrac{A+B}{2}\cos\dfrac{A-B}{2}\)<br>
+      \((iv)\;\cos A-\cos B = 2\sin\dfrac{A+B}{2}\sin\dfrac{B-A}{2}\)
+    </div>
+  </div>
+
+  <div class="formula-card">
+    <div class="num">Formula 5 — Compound Angle</div>
+    <div class="formula-body">
+      \((i)\;\sin(A\pm B) = \sin A\cos B \pm \cos A\sin B\)<br>
+      \((ii)\;\cos(A\pm B) = \cos A\cos B \mp \sin A\sin B\)
+    </div>
+  </div>
+
+  <div class="formula-card">
+    <div class="num">Formula 6 — Values at Integer Multiples of π</div>
+    <div class="formula-body">
+      \(\sin n\pi = 0,\quad \sin 2n\pi = 0\)<br>
+      \(\cos n\pi = (-1)^n,\quad \cos 2n\pi = 1\)
+    </div>
+    <div class="formula-note">For any integer n.</div>
+  </div>
+
+  <div class="formula-card">
+    <div class="num">Formula 7 — Shifted Values</div>
+    <div class="formula-body">
+      \(\sin(n\pm1)\pi = 0\)<br>
+      \(\cos(n\pm1)\pi = -\cos n\pi\)
+    </div>
+    <div class="formula-note">For any integer n.</div>
+  </div>
+</div>
+<footer>Virtual Labs &copy; 2025 &nbsp;|&nbsp; <span>Pimpri Chinchwad College of Engineering</span></footer>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Virtual Lab – Fourier Series</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --bg:#f0f4ff;--surface:#ffffff;--surface2:#e8edf8;
+  --navy:#1a2456;--mid:#2e4db3;--accent:#c0392b;
+  --gold:#c47d0a;--green:#1e8449;--blue:#1a6bb5;
+  --text:#1e2d45;--muted:#5a6a85;--border:#cdd5e8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* HEADER */
+header{background:var(--surface);border-bottom:3px solid var(--accent);
+  padding:14px 40px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(26,36,86,.1);}
+.logo-row{display:flex;align-items:center;gap:16px;}
+.logo-badge{width:50px;height:50px;background:var(--surface);border-radius:10px;
+  border:1px solid var(--border);display:grid;place-items:center;overflow:hidden;}
+.logo-badge img{width:100%;height:100%;object-fit:contain;}
+.logo-text .l1{font-family:'Playfair Display',serif;font-size:13.5px;color:var(--navy);font-weight:700;}
+.logo-text .l2{font-size:11px;color:var(--muted);margin-top:2px;}
+.user-pill{display:flex;align-items:center;gap:8px;background:var(--surface2);
+  border:1px solid var(--border);padding:8px 16px;border-radius:50px;font-size:13px;color:var(--mid);}
+.user-pill i{color:var(--accent);}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--mid) 100%);
+  text-align:center;padding:64px 20px 54px;position:relative;overflow:hidden;}
+.hero::before{content:'∫';position:absolute;font-size:340px;font-family:'Playfair Display',serif;
+  color:rgba(255,255,255,.05);top:-50px;left:50%;transform:translateX(-50%);pointer-events:none;line-height:1;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,50px);color:#fff;line-height:1.15;margin-bottom:12px;}
+.hero h1 span{color:#fbbf24;}
+.hero p{color:rgba(255,255,255,.75);font-size:15.5px;max-width:520px;margin:0 auto;}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:20px;max-width:1100px;margin:50px auto 60px;padding:0 30px;}
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;
+  padding:28px 20px 24px;text-align:center;cursor:pointer;
+  transition:transform .22s,box-shadow .22s,border-color .22s;
+  text-decoration:none;color:var(--text);display:block;
+  box-shadow:0 2px 8px rgba(26,36,86,.06);}
+.card:hover{transform:translateY(-5px);border-color:var(--accent);
+  box-shadow:0 10px 32px rgba(192,57,43,.14);}
+.card-icon{width:56px;height:56px;border-radius:14px;background:rgba(192,57,43,.07);
+  display:grid;place-items:center;margin:0 auto 16px;
+  border:1.5px solid rgba(192,57,43,.18);font-size:22px;color:var(--accent);}
+.card h3{font-family:'Playfair Display',serif;font-size:16px;color:var(--navy);margin-bottom:6px;}
+.card p{font-size:12px;color:var(--muted);line-height:1.5;}
+
+footer{text-align:center;padding:22px;font-size:12.5px;color:var(--muted);border-top:1.5px solid var(--border);}
+footer span{color:var(--accent);font-weight:500;}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo-row">
+    <div class="logo-badge"><img src="https://raw.githubusercontent.com/dineshkute90/virtual_lab_LAUC/main/pccoe.png" alt="PCOE" onerror="this.src='https://via.placeholder.com/50x50/1a2456/fff?text=P'"></div>
+    <div class="logo-text"><div class="l1">APPLIED SCIENCES &amp; HUMANITIES</div><div class="l2">Pimpri Chinchwad College of Engineering</div></div>
+  </div>
+  <div class="user-pill"><i class="fas fa-user-circle"></i> Welcome, Student</div>
+</header>
+<section class="hero">
+  <h1>Virtual Lab on<br><span>Fourier Series</span></h1>
+  <p>Engineering Mathematics Experiment — Interactive Learning Platform</p>
+</section>
+<div class="grid">
+  <a href="aim.html" class="card"><div class="card-icon"><i class="fas fa-bullseye"></i></div><h3>Aim</h3><p>Objective of the experiment</p></a>
+  <a href="theory.html" class="card"><div class="card-icon"><i class="fas fa-book"></i></div><h3>Theory</h3><p>Background concepts &amp; definitions</p></a>
+  <a href="formulasheet.html" class="card"><div class="card-icon"><i class="fas fa-superscript"></i></div><h3>Formula Sheet</h3><p>Key integration formulas</p></a>
+  <a href="pretest.html" class="card"><div class="card-icon"><i class="fas fa-pencil-alt"></i></div><h3>Pre Test</h3><p>Assess your knowledge before the experiment</p></a>
+  <a href="topic.html" class="card"><div class="card-icon"><i class="fas fa-wave-square"></i></div><h3>Simulation</h3><p>Step-by-step Fourier solver with graphs</p></a>
+  <a href="posttest.html" class="card"><div class="card-icon"><i class="fas fa-clipboard-check"></i></div><h3>Post Test</h3><p>Fourier Series MCQ after the experiment</p></a>
+  <a href="refernces.html" class="card"><div class="card-icon"><i class="fas fa-book-open"></i></div><h3>References</h3><p>Further reading materials</p></a>
+  <a href="contributors.html" class="card"><div class="card-icon"><i class="fas fa-users"></i></div><h3>Contributors</h3><p>People involved in this project</p></a>
+  <a href="feedback.html" class="card"><div class="card-icon"><i class="fas fa-comment-alt"></i></div><h3>Feedback</h3><p>Share your experience with us</p></a>
+</div>
+<footer>Virtual Labs &copy; 2025 &nbsp;|&nbsp; Applied Sciences &amp; Humanities &nbsp;|&nbsp; <span>Pimpri Chinchwad College of Engineering</span></footer>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Post Test – Fourier Series Virtual Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+:root{--bg:#f0f4ff;--surface:#fff;--surface2:#e8edf8;--navy:#1a2456;--mid:#2e4db3;--accent:#c0392b;--gold:#b06c0a;--green:#1a7a40;--text:#1e2d45;--muted:#5a6a85;--border:#cdd5e8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+header{background:var(--surface);border-bottom:3px solid var(--accent);padding:14px 36px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;box-shadow:0 2px 12px rgba(26,36,86,.09);}
+.logo-row{display:flex;align-items:center;gap:14px;}
+.logo-badge{width:46px;height:46px;background:var(--surface);border-radius:9px;border:1px solid var(--border);display:grid;place-items:center;overflow:hidden;}
+.logo-badge img{width:100%;height:100%;object-fit:contain;}
+.logo-text .l1{font-family:'Playfair Display',serif;font-size:13px;color:var(--navy);font-weight:700;}
+.logo-text .l2{font-size:10px;color:var(--muted);}
+.back-btn{display:flex;align-items:center;gap:8px;background:rgba(192,57,43,.07);border:1.5px solid rgba(192,57,43,.28);color:var(--accent);padding:8px 16px;border-radius:50px;text-decoration:none;font-size:13px;transition:.2s;}
+.back-btn:hover{background:rgba(192,57,43,.15);}
+.page{max-width:900px;margin:0 auto;padding:44px 28px 70px;}
+.page-title{font-family:'Playfair Display',serif;font-size:38px;color:var(--navy);margin-bottom:6px;}
+.page-title span{color:var(--accent);}
+.divider{width:60px;height:3px;background:var(--accent);border-radius:3px;margin-bottom:10px;}
+.subtitle{color:var(--muted);font-size:14px;margin-bottom:34px;}
+.section-label{font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:1.2px;font-weight:700;margin:28px 0 12px;display:flex;align-items:center;gap:10px;}
+.section-label::after{content:'';flex:1;height:1.5px;background:rgba(176,108,10,.25);}
+.q-card{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:22px 26px;margin-bottom:14px;box-shadow:0 2px 6px rgba(26,36,86,.05);}
+.q-text{font-size:15px;color:var(--text);margin-bottom:14px;line-height:1.95;}
+.q-text .qnum{color:var(--navy);font-weight:700;margin-right:6px;font-size:15.5px;}
+.option{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border-radius:8px;margin-bottom:8px;cursor:pointer;border:1.5px solid var(--border);transition:.2s;background:var(--surface2);}
+.option:hover{background:#dde4f5;border-color:rgba(192,57,43,.32);}
+.option input{accent-color:var(--accent);width:16px;height:16px;flex-shrink:0;margin-top:3px;}
+.option label{cursor:pointer;font-size:14px;color:var(--text);line-height:1.85;}
+.option.correct{background:rgba(26,122,64,.1);border-color:var(--green)!important;}
+.option.correct label{color:var(--green);font-weight:500;}
+.option.wrong{background:rgba(192,57,43,.08);border-color:var(--accent)!important;}
+.option.wrong label{color:var(--accent);}
+.submit-row{text-align:center;margin-top:36px;}
+.btn-submit{background:var(--accent);color:#fff;border:none;padding:14px 46px;border-radius:10px;font-size:16px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:10px;}
+.btn-submit:hover{background:#a93226;}
+.result-panel{display:none;margin-top:28px;border-radius:16px;padding:30px;text-align:center;background:rgba(26,122,64,.07);border:1.5px solid rgba(26,122,64,.28);}
+.result-panel .score{font-family:'Playfair Display',serif;font-size:60px;color:var(--green);line-height:1;}
+.result-panel .out-of{font-size:20px;color:var(--muted);margin-bottom:12px;}
+.result-panel .verdict{font-size:17px;color:var(--navy);font-weight:500;}
+footer{text-align:center;padding:22px;font-size:12px;color:var(--muted);border-top:1.5px solid var(--border);}
+footer span{color:var(--accent);font-weight:500;}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo-row">
+    <div class="logo-badge"><img src="https://raw.githubusercontent.com/dineshkute90/virtual_lab_LAUC/main/pccoe.png" alt="PCOE" onerror="this.src='https://via.placeholder.com/46x46/1a2456/fff?text=P'"></div>
+    <div class="logo-text"><div class="l1">APPLIED SCIENCES &amp; HUMANITIES</div><div class="l2">Pimpri Chinchwad College of Engineering</div></div>
+  </div>
+  <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Home</a>
+</header>
+<div class="page">
+  <div class="page-title">Fourier Series <span>Post Test</span></div>
+  <div class="divider"></div>
+  <p class="subtitle">13 questions on Fourier Series — Answer all and press Submit to see your score.</p>
+
+  <div class="section-label">Standard Fourier Series</div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q1.</span>Find the Fourier series of \(f(x)=x^2,\;-\pi &lt; x &lt; \pi\) with \(f(x+2\pi)=f(x)\).</div>
+    <div class="option"><input type="radio" name="q1" id="q1a"><label for="q1a">\(\displaystyle\frac{\pi^2}{3}+4\sum_{n=1}^{\infty}\frac{(-1)^n}{n^2}\cos(nx)\)</label></div>
+    <div class="option"><input type="radio" name="q1" id="q1b"><label for="q1b">\(\displaystyle\frac{\pi^2}{6}+2\sum_{n=1}^{\infty}\frac{(-1)^n}{n^2}\cos(nx)\)</label></div>
+    <div class="option"><input type="radio" name="q1" id="q1c"><label for="q1c">\(\displaystyle\frac{2\pi^2}{3}+\sum_{n=1}^{\infty}\frac{4}{n^2}\cos(nx)\)</label></div>
+    <div class="option"><input type="radio" name="q1" id="q1d"><label for="q1d">\(\displaystyle\frac{\pi^2}{3}+4\sum_{n=1}^{\infty}\frac{1}{n^2}\cos(nx)\)</label></div></div>
+
+  <div class="q-card"><div class="q-text"><span class="qnum">Q2.</span>Find the Fourier series of \(f(x)=x^3,\;-1 &lt; x &lt; 1\) with \(f(x+2)=f(x)\).</div>
+    <div class="option"><input type="radio" name="q2" id="q2a"><label for="q2a">\(\displaystyle\sum_{n=1}^{\infty}(-1)^{n+1}\!\left(\frac{2}{n\pi}-\frac{12}{n^3\pi^3}\right)\sin(n\pi x)\)</label></div>
+    <div class="option"><input type="radio" name="q2" id="q2b"><label for="q2b">\(\displaystyle\sum_{n=1}^{\infty}(-1)^{n}\frac{2}{n\pi}\sin(n\pi x)\)</label></div>
+    <div class="option"><input type="radio" name="q2" id="q2c"><label for="q2c">\(\displaystyle\sum_{n=1}^{\infty}\frac{6}{n^3\pi^3}(-1)^n\sin(n\pi x)\)</label></div>
+    <div class="option"><input type="radio" name="q2" id="q2d"><label for="q2d">\(\displaystyle\sum_{n=1}^{\infty}\frac{2}{n\pi}\sin(n\pi x)\)</label></div></div>
+
+  <div class="q-card"><div class="q-text"><span class="qnum">Q3.</span>Find the Fourier series of \(f(x)=2-x,\;0 &lt; x &lt; 2\) with \(f(x+2)=f(x)\).</div>
+    <div class="option"><input type="radio" name="q3" id="q3a"><label for="q3a">\(\displaystyle 1+\sum_{n=1}^{\infty}\frac{2}{n\pi}\sin(n\pi x)\)</label></div>
+    <div class="option"><input type="radio" name="q3" id="q3b"><label for="q3b">\(\displaystyle 1+\sum_{n=1}^{\infty}\frac{2}{n\pi}\cos(n\pi x)\)</label></div>
+    <div class="option"><input type="radio" name="q3" id="q3c"><label for="q3c">\(\displaystyle 2+\sum_{n=1}^{\infty}\frac{1}{n\pi}\sin(n\pi x)\)</label></div>
+    <div class="option"><input type="radio" name="q3" id="q3d"><label for="q3d">\(\displaystyle 1+\sum_{n=1}^{\infty}\frac{(-1)^n}{n\pi}\sin(n\pi x)\)</label></div></div>
+
+  <div class="q-card"><div class="q-text"><span class="qnum">Q4.</span>Find the Fourier series of \(f(x)=\pi^2-x^2,\;-\pi &lt; x &lt; \pi\) with \(f(x+2\pi)=f(x)\).</div>
+    <div class="option"><input type="radio" name="q4" id="q4a"><label for="q4a">\(\displaystyle\frac{2\pi^2}{3}-4\sum_{n=1}^{\infty}\frac{(-1)^n}{n^2}\cos(nx)\)</label></div>
+    <div class="option"><input type="radio" name="q4" id="q4b"><label for="q4b">\(\displaystyle\frac{\pi^2}{3}+4\sum_{n=1}^{\infty}\frac{(-1)^n}{n^2}\cos(nx)\)</label></div>
+    <div class="option"><input type="radio" name="q4" id="q4c"><label for="q4c">\(\displaystyle\frac{2\pi^2}{3}+4\sum_{n=1}^{\infty}\frac{1}{n^2}\cos(nx)\)</label></div>
+    <div class="option"><input type="radio" name="q4" id="q4d"><label for="q4d">\(\displaystyle\frac{2\pi^2}{3}-4\sum_{n=1}^{\infty}\frac{1}{n^2}\cos(nx)\)</label></div></div>
+
+  <div class="q-card"><div class="q-text"><span class="qnum">Q5.</span>Find the Fourier series of \(f(x)=2x^2-1,\;-1\le x\le 1\) with \(f(x+2)=f(x)\).</div>
+    <div class="option"><input type="radio" name="q5" id="q5a"><label for="q5a">\(\displaystyle-\frac{1}{3}+\sum_{n=1}^{\infty}\frac{8(-1)^n}{n^2\pi^2}\cos(n\pi x)\)</label></div>
+    <div class="option"><input type="radio" name="q5" id="q5b"><label for="q5b">\(\displaystyle\frac{1}{3}+\sum_{n=1}^{\infty}\frac{4(-1)^n}{n^2\pi^2}\cos(n\pi x)\)</label></div>
+    <div class="option"><input type="radio" name="q5" id="q5c"><label for="q5c">\(\displaystyle-\frac{1}{3}+\sum_{n=1}^{\infty}\frac{8}{n^2\pi^2}\cos(n\pi x)\)</label></div>
+    <div class="option"><input type="radio" name="q5" id="q5d"><label for="q5d">\(\displaystyle\frac{2}{3}+\sum_{n=1}^{\infty}\frac{8(-1)^n}{n^2\pi^2}\sin(n\pi x)\)</label></div></div>
+
+  <div class="section-label">Piecewise &amp; Special Functions</div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q6.</span>Find the Fourier series of \(\displaystyle f(x)=\begin{cases}x, & 0 &lt; x \le \pi\\0, & \pi &lt; x \le 2\pi\end{cases}\) with \(f(x+2\pi)=f(x)\).</div>
+    <div class="option"><input type="radio" name="q6" id="q6a"><label for="q6a">\(\displaystyle\frac{\pi}{4}+\sum_{k=0}^{\infty}\frac{-2}{\pi(2k+1)^2}\cos((2k+1)x)+\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}\sin(nx)\)</label></div>
+    <div class="option"><input type="radio" name="q6" id="q6b"><label for="q6b">\(\displaystyle\frac{\pi}{2}+\sum_{n=1}^{\infty}\frac{1}{n}\sin(nx)\)</label></div>
+    <div class="option"><input type="radio" name="q6" id="q6c"><label for="q6c">\(\displaystyle\frac{\pi}{4}+\sum_{n=1}^{\infty}\frac{(-1)^n-1}{\pi n^2}\cos(nx)+\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n}\sin(nx)\)</label></div>
+    <div class="option"><input type="radio" name="q6" id="q6d"><label for="q6d">\(\displaystyle\frac{\pi}{2}+\sum_{n=1}^{\infty}\frac{(-1)^n}{n}\sin(nx)\)</label></div></div>
+
+  <div class="q-card"><div class="q-text"><span class="qnum">Q7.</span>For \(f(x)=4-x^3,\;-\pi &lt; x &lt; \pi\), calculate \(a_0\).</div>
+    <div class="option"><input type="radio" name="q7" id="q7a"><label for="q7a">\(a_0=8\)</label></div>
+    <div class="option"><input type="radio" name="q7" id="q7b"><label for="q7b">\(a_0=4\pi\)</label></div>
+    <div class="option"><input type="radio" name="q7" id="q7c"><label for="q7c">\(a_0=0\)</label></div>
+    <div class="option"><input type="radio" name="q7" id="q7d"><label for="q7d">\(a_0=2\pi\)</label></div></div>
+
+  <div class="q-card"><div class="q-text"><span class="qnum">Q8.</span>Find the Fourier cosine series (half-range) of \(f(x)=x,\;0 &lt; x &lt; L\).</div>
+    <div class="option"><input type="radio" name="q8" id="q8a"><label for="q8a">\(\displaystyle\frac{L}{2}-\frac{4L}{\pi^2}\sum_{n=1}^{\infty}\frac{1}{(2n-1)^2}\cos\!\left(\frac{(2n-1)\pi x}{L}\right)\)</label></div>
+    <div class="option"><input type="radio" name="q8" id="q8b"><label for="q8b">\(\displaystyle\frac{L}{2}+\frac{4L}{\pi^2}\sum_{n=1}^{\infty}\frac{(-1)^n}{n^2}\cos\!\left(\frac{n\pi x}{L}\right)\)</label></div>
+    <div class="option"><input type="radio" name="q8" id="q8c"><label for="q8c">\(\displaystyle\frac{L}{2}+\frac{2L}{\pi}\sum_{n=1}^{\infty}\frac{1}{n}\sin\!\left(\frac{n\pi x}{L}\right)\)</label></div>
+    <div class="option"><input type="radio" name="q8" id="q8d"><label for="q8d">\(\displaystyle\frac{L}{2}-\frac{4L}{\pi}\sum_{n=1}^{\infty}\frac{1}{n}\sin\!\left(\frac{n\pi x}{L}\right)\)</label></div></div>
+
+  <div class="section-label">Classic Waveforms &amp; Properties</div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q9.</span>The Fourier series of the square wave \(\displaystyle f(x)=\begin{cases}1,&0&lt;x&lt;\pi\\-1,&-\pi&lt;x&lt;0\end{cases}\) (period \(2\pi\)) is:</div>
+    <div class="option"><input type="radio" name="q9" id="q9a"><label for="q9a">\(\displaystyle\frac{4}{\pi}\sum_{n=1}^{\infty}\frac{1}{2n-1}\sin((2n-1)x)\)</label></div>
+    <div class="option"><input type="radio" name="q9" id="q9b"><label for="q9b">\(\displaystyle\frac{4}{\pi}\sum_{n=1}^{\infty}\frac{1}{n}\sin(nx)\)</label></div>
+    <div class="option"><input type="radio" name="q9" id="q9c"><label for="q9c">\(\displaystyle\frac{2}{\pi}\sum_{n=1}^{\infty}\frac{(-1)^n}{n}\cos(nx)\)</label></div>
+    <div class="option"><input type="radio" name="q9" id="q9d"><label for="q9d">\(\displaystyle\frac{4}{\pi}\sum_{n=1}^{\infty}\frac{1}{2n-1}\cos((2n-1)x)\)</label></div></div>
+
+  <div class="q-card"><div class="q-text"><span class="qnum">Q10.</span>The Fourier series of \(f(x)=|x|,\;-\pi &lt; x &lt; \pi\) (periodic) is:</div>
+    <div class="option"><input type="radio" name="q10" id="q10a"><label for="q10a">\(\displaystyle\frac{\pi}{2}-\frac{4}{\pi}\sum_{n=1}^{\infty}\frac{\cos((2n-1)x)}{(2n-1)^2}\)</label></div>
+    <div class="option"><input type="radio" name="q10" id="q10b"><label for="q10b">\(\displaystyle\frac{\pi}{2}+\frac{4}{\pi}\sum_{n=1}^{\infty}\frac{\cos(nx)}{n^2}\)</label></div>
+    <div class="option"><input type="radio" name="q10" id="q10c"><label for="q10c">\(\displaystyle\frac{\pi}{2}-\frac{2}{\pi}\sum_{n=1}^{\infty}\frac{\sin(nx)}{n}\)</label></div>
+    <div class="option"><input type="radio" name="q10" id="q10d"><label for="q10d">\(\displaystyle\frac{\pi}{2}+\frac{2}{\pi}\sum_{n=1}^{\infty}\frac{\sin((2n-1)x)}{2n-1}\)</label></div></div>
+
+  <div class="section-label">Parseval's Identity &amp; Theory</div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q11.</span>Using Parseval's identity for \(f(x)=x^2\) on \((-\pi,\pi)\), find \(\displaystyle\sum_{n=1}^{\infty}\frac{1}{n^4}\).</div>
+    <div class="option"><input type="radio" name="q11" id="q11a"><label for="q11a">\(\dfrac{\pi^4}{90}\)</label></div>
+    <div class="option"><input type="radio" name="q11" id="q11b"><label for="q11b">\(\dfrac{\pi^4}{96}\)</label></div>
+    <div class="option"><input type="radio" name="q11" id="q11c"><label for="q11c">\(\dfrac{\pi^2}{6}\)</label></div>
+    <div class="option"><input type="radio" name="q11" id="q11d"><label for="q11d">\(\dfrac{\pi^4}{45}\)</label></div></div>
+
+  <div class="q-card"><div class="q-text"><span class="qnum">Q12.</span>The Fourier series of an <b>even</b> function contains only:</div>
+    <div class="option"><input type="radio" name="q12" id="q12a"><label for="q12a">Cosine terms and constant term</label></div>
+    <div class="option"><input type="radio" name="q12" id="q12b"><label for="q12b">Sine terms only</label></div>
+    <div class="option"><input type="radio" name="q12" id="q12c"><label for="q12c">Both sine and cosine terms</label></div>
+    <div class="option"><input type="radio" name="q12" id="q12d"><label for="q12d">Only constant term</label></div></div>
+
+  <div class="q-card"><div class="q-text"><span class="qnum">Q13.</span>The Fourier series of \(f(x)=\cosh(ax),\;-\pi &lt; x &lt; \pi\) (periodic) is:</div>
+    <div class="option"><input type="radio" name="q13" id="q13a"><label for="q13a">\(\displaystyle\frac{\sinh(a\pi)}{a\pi}+\frac{2a\sinh(a\pi)}{\pi}\sum_{n=1}^{\infty}\frac{(-1)^n}{a^2+n^2}\cos(nx)\)</label></div>
+    <div class="option"><input type="radio" name="q13" id="q13b"><label for="q13b">\(\displaystyle\frac{\sinh(a\pi)}{a\pi}+\frac{2a\sinh(a\pi)}{\pi}\sum_{n=1}^{\infty}\frac{(-1)^n}{a^2+n^2}\sin(nx)\)</label></div>
+    <div class="option"><input type="radio" name="q13" id="q13c"><label for="q13c">\(\displaystyle\frac{\cosh(a\pi)}{a\pi}+\sum_{n=1}^{\infty}\frac{2a}{a^2+n^2}\cos(nx)\)</label></div>
+    <div class="option"><input type="radio" name="q13" id="q13d"><label for="q13d">\(\displaystyle\frac{\sinh(a\pi)}{\pi}\sum_{n=1}^{\infty}\frac{(-1)^n}{n^2}\cos(nx)\)</label></div></div>
+
+  <div class="submit-row">
+    <button class="btn-submit" onclick="submitTest()"><i class="fas fa-paper-plane"></i> Submit Test</button>
+  </div>
+  <div class="result-panel" id="resultPanel">
+    <div class="score" id="scoreNum">—</div>
+    <div class="out-of">out of 13</div>
+    <div class="verdict" id="verdict"></div>
+  </div>
+</div>
+<footer>Virtual Labs &copy; 2025 &nbsp;|&nbsp; <span>Pimpri Chinchwad College of Engineering</span></footer>
+<script>
+const answers={q1:'a',q2:'a',q3:'a',q4:'a',q5:'a',q6:'a',q7:'a',q8:'a',q9:'a',q10:'a',q11:'a',q12:'a',q13:'a'};
+function submitTest(){
+  let score=0;
+  for(const[q,correct]of Object.entries(answers)){
+    document.querySelectorAll(`input[name="${q}"]`).forEach(o=>{
+      const div=o.closest('.option'),sfx=o.id.replace(q,'');
+      if(sfx===correct){div.classList.add('correct');if(o.checked)score++;}
+      else if(o.checked)div.classList.add('wrong');
+      o.disabled=true;
+    });
+  }
+  document.getElementById('scoreNum').textContent=score;
+  document.getElementById('verdict').textContent=score>=11?'🎉 Excellent — Outstanding grasp of Fourier Series!':score>=7?'👍 Good — Review the topics you found difficult.':'📖 Needs improvement — Revisit the theory and simulation.';
+  const p=document.getElementById('resultPanel');p.style.display='block';p.scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Pre Test – Fourier Series Virtual Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+:root{--bg:#f0f4ff;--surface:#fff;--surface2:#e8edf8;--navy:#1a2456;--mid:#2e4db3;--accent:#c0392b;--gold:#b06c0a;--green:#1a7a40;--text:#1e2d45;--muted:#5a6a85;--border:#cdd5e8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+header{background:var(--surface);border-bottom:3px solid var(--accent);padding:14px 36px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;box-shadow:0 2px 12px rgba(26,36,86,.09);}
+.logo-row{display:flex;align-items:center;gap:14px;}
+.logo-badge{width:46px;height:46px;background:var(--surface);border-radius:9px;border:1px solid var(--border);display:grid;place-items:center;overflow:hidden;}
+.logo-badge img{width:100%;height:100%;object-fit:contain;}
+.logo-text .l1{font-family:'Playfair Display',serif;font-size:13px;color:var(--navy);font-weight:700;}
+.logo-text .l2{font-size:10px;color:var(--muted);}
+.back-btn{display:flex;align-items:center;gap:8px;background:rgba(192,57,43,.07);border:1.5px solid rgba(192,57,43,.28);color:var(--accent);padding:8px 16px;border-radius:50px;text-decoration:none;font-size:13px;transition:.2s;}
+.back-btn:hover{background:rgba(192,57,43,.15);}
+.page{max-width:900px;margin:0 auto;padding:44px 28px 70px;}
+.page-title{font-family:'Playfair Display',serif;font-size:38px;color:var(--navy);margin-bottom:6px;}
+.page-title span{color:var(--accent);}
+.divider{width:60px;height:3px;background:var(--accent);border-radius:3px;margin-bottom:10px;}
+.subtitle{color:var(--muted);font-size:14px;margin-bottom:34px;}
+.section-label{font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:1.2px;font-weight:700;margin:28px 0 12px;display:flex;align-items:center;gap:10px;}
+.section-label::after{content:'';flex:1;height:1.5px;background:rgba(176,108,10,.25);}
+.q-card{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:12px;box-shadow:0 2px 6px rgba(26,36,86,.05);}
+.q-text{font-size:15px;color:var(--text);margin-bottom:13px;line-height:1.9;}
+.q-text .qnum{color:var(--navy);font-weight:700;margin-right:5px;}
+.option{display:flex;align-items:flex-start;gap:11px;padding:9px 13px;border-radius:8px;margin-bottom:7px;cursor:pointer;border:1.5px solid var(--border);transition:.2s;background:var(--surface2);}
+.option:hover{background:#dde4f5;border-color:rgba(192,57,43,.3);}
+.option input{accent-color:var(--accent);width:16px;height:16px;flex-shrink:0;margin-top:3px;}
+.option label{cursor:pointer;font-size:14px;color:var(--text);line-height:1.8;}
+.option.correct{background:rgba(26,122,64,.1);border-color:var(--green)!important;}
+.option.correct label{color:var(--green);font-weight:500;}
+.option.wrong{background:rgba(192,57,43,.08);border-color:var(--accent)!important;}
+.option.wrong label{color:var(--accent);}
+.submit-row{text-align:center;margin-top:34px;}
+.btn-submit{background:var(--accent);color:#fff;border:none;padding:13px 44px;border-radius:10px;font-size:16px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:10px;}
+.btn-submit:hover{background:#a93226;}
+.result-panel{display:none;margin-top:26px;border-radius:16px;padding:30px;text-align:center;background:rgba(26,122,64,.07);border:1.5px solid rgba(26,122,64,.28);}
+.result-panel .score{font-family:'Playfair Display',serif;font-size:58px;color:var(--green);line-height:1;}
+.result-panel .out-of{font-size:19px;color:var(--muted);margin-bottom:10px;}
+.result-panel .verdict{font-size:17px;color:var(--navy);font-weight:500;}
+footer{text-align:center;padding:22px;font-size:12px;color:var(--muted);border-top:1.5px solid var(--border);}
+footer span{color:var(--accent);font-weight:500;}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo-row">
+    <div class="logo-badge"><img src="https://raw.githubusercontent.com/dineshkute90/virtual_lab_LAUC/main/pccoe.png" alt="PCOE" onerror="this.src='https://via.placeholder.com/46x46/1a2456/fff?text=P'"></div>
+    <div class="logo-text"><div class="l1">APPLIED SCIENCES &amp; HUMANITIES</div><div class="l2">Pimpri Chinchwad College of Engineering</div></div>
+  </div>
+  <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Home</a>
+</header>
+<div class="page">
+  <div class="page-title">Integration <span>Pre Test</span></div>
+  <div class="divider"></div>
+  <p class="subtitle">20 questions — Take this before the experiment to assess your existing knowledge.</p>
+
+  <div class="section-label">Definite Integrals — Basics</div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q1.</span>\(\displaystyle\int_0^{\pi}\sin x\,dx\)</div>
+    <div class="option"><input type="radio" name="q1" id="q1a"><label for="q1a">\(1\)</label></div>
+    <div class="option"><input type="radio" name="q1" id="q1b"><label for="q1b">\(-1\)</label></div>
+    <div class="option"><input type="radio" name="q1" id="q1c"><label for="q1c">\(2\)</label></div>
+    <div class="option"><input type="radio" name="q1" id="q1d"><label for="q1d">\(-2\)</label></div></div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q2.</span>\(\displaystyle\int_{-\pi}^{\pi}x^2\,dx\)</div>
+    <div class="option"><input type="radio" name="q2" id="q2a"><label for="q2a">\(\dfrac{2\pi^3}{3}\)</label></div>
+    <div class="option"><input type="radio" name="q2" id="q2b"><label for="q2b">\(\pi^3\)</label></div>
+    <div class="option"><input type="radio" name="q2" id="q2c"><label for="q2c">\(\dfrac{\pi^3}{3}\)</label></div>
+    <div class="option"><input type="radio" name="q2" id="q2d"><label for="q2d">\(2\pi^2\)</label></div></div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q3.</span>\(\displaystyle\int_0^{2\pi}\cos 3x\,dx\)</div>
+    <div class="option"><input type="radio" name="q3" id="q3a"><label for="q3a">\(\pi/2\)</label></div>
+    <div class="option"><input type="radio" name="q3" id="q3b"><label for="q3b">\(\pi\)</label></div>
+    <div class="option"><input type="radio" name="q3" id="q3c"><label for="q3c">\(0\)</label></div>
+    <div class="option"><input type="radio" name="q3" id="q3d"><label for="q3d">\(1\)</label></div></div>
+
+  <div class="section-label">Integration By Parts</div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q4.</span>\(\displaystyle\int x\cos x\,dx\)</div>
+    <div class="option"><input type="radio" name="q4" id="q4a"><label for="q4a">\(x\sin x+\cos x+C\)</label></div>
+    <div class="option"><input type="radio" name="q4" id="q4b"><label for="q4b">\(x\cos x-\sin x+C\)</label></div>
+    <div class="option"><input type="radio" name="q4" id="q4c"><label for="q4c">\(\sin x+C\)</label></div>
+    <div class="option"><input type="radio" name="q4" id="q4d"><label for="q4d">\(\cos x+C\)</label></div></div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q5.</span>\(\displaystyle\int_0^{\pi}x\sin 2x\,dx\)</div>
+    <div class="option"><input type="radio" name="q5" id="q5a"><label for="q5a">\(-\pi/2\)</label></div>
+    <div class="option"><input type="radio" name="q5" id="q5b"><label for="q5b">\(\pi/4\)</label></div>
+    <div class="option"><input type="radio" name="q5" id="q5c"><label for="q5c">\(\pi^2/2\)</label></div>
+    <div class="option"><input type="radio" name="q5" id="q5d"><label for="q5d">\(\pi/2\)</label></div></div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q6.</span>\(\displaystyle\int x^2 e^x\,dx\)</div>
+    <div class="option"><input type="radio" name="q6" id="q6a"><label for="q6a">\(e^x(x^2+2x+2)+C\)</label></div>
+    <div class="option"><input type="radio" name="q6" id="q6b"><label for="q6b">\(e^x(x^2-2x+2)+C\)</label></div>
+    <div class="option"><input type="radio" name="q6" id="q6c"><label for="q6c">\(x^2e^x+C\)</label></div>
+    <div class="option"><input type="radio" name="q6" id="q6d"><label for="q6d">\(e^x(x^2-x+1)+C\)</label></div></div>
+
+  <div class="section-label">Trigonometric Integrals</div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q7.</span>\(\displaystyle\int_{-\pi}^{\pi}\sin 2x\cos 3x\,dx\)</div>
+    <div class="option"><input type="radio" name="q7" id="q7a"><label for="q7a">\(1\)</label></div>
+    <div class="option"><input type="radio" name="q7" id="q7b"><label for="q7b">\(\pi\)</label></div>
+    <div class="option"><input type="radio" name="q7" id="q7c"><label for="q7c">\(0\)</label></div>
+    <div class="option"><input type="radio" name="q7" id="q7d"><label for="q7d">\(2\)</label></div></div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q8.</span>For integers \(m\neq n\), evaluate \(\displaystyle\int_0^{2\pi}\cos mx\cos nx\,dx\)</div>
+    <div class="option"><input type="radio" name="q8" id="q8a"><label for="q8a">\(1\)</label></div>
+    <div class="option"><input type="radio" name="q8" id="q8b"><label for="q8b">\(\pi\)</label></div>
+    <div class="option"><input type="radio" name="q8" id="q8c"><label for="q8c">\(0\)</label></div>
+    <div class="option"><input type="radio" name="q8" id="q8d"><label for="q8d">\(2\)</label></div></div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q9.</span>\(\displaystyle\int_0^{\pi}\sin^2(4x)\,dx\)</div>
+    <div class="option"><input type="radio" name="q9" id="q9a"><label for="q9a">\(3\pi^2/2\)</label></div>
+    <div class="option"><input type="radio" name="q9" id="q9b"><label for="q9b">\(\pi/2\)</label></div>
+    <div class="option"><input type="radio" name="q9" id="q9c"><label for="q9c">\(\pi^2/2\)</label></div>
+    <div class="option"><input type="radio" name="q9" id="q9d"><label for="q9d">\(0\)</label></div></div>
+
+  <div class="section-label">Even and Odd Functions</div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q10.</span>Determine if \(f(x)=x^3+x\) is:</div>
+    <div class="option"><input type="radio" name="q10" id="q10a"><label for="q10a">Even</label></div>
+    <div class="option"><input type="radio" name="q10" id="q10b"><label for="q10b">Odd</label></div>
+    <div class="option"><input type="radio" name="q10" id="q10c"><label for="q10c">Neither</label></div>
+    <div class="option"><input type="radio" name="q10" id="q10d"><label for="q10d">None</label></div></div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q11.</span>Determine if \(g(x)=\cos x+x^2\) is:</div>
+    <div class="option"><input type="radio" name="q11" id="q11a"><label for="q11a">Even</label></div>
+    <div class="option"><input type="radio" name="q11" id="q11b"><label for="q11b">Odd</label></div>
+    <div class="option"><input type="radio" name="q11" id="q11c"><label for="q11c">Neither</label></div>
+    <div class="option"><input type="radio" name="q11" id="q11d"><label for="q11d">None</label></div></div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q12.</span>If \(f(x)\) is odd, then \(\displaystyle\int_{-a}^{a}f(x)\,dx =\)</div>
+    <div class="option"><input type="radio" name="q12" id="q12a"><label for="q12a">\(f(x)\)</label></div>
+    <div class="option"><input type="radio" name="q12" id="q12b"><label for="q12b">\(0\)</label></div>
+    <div class="option"><input type="radio" name="q12" id="q12c"><label for="q12c">\(-f(x)\)</label></div>
+    <div class="option"><input type="radio" name="q12" id="q12d"><label for="q12d">\(1\)</label></div></div>
+
+  <div class="section-label">Standard Integrals</div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q13.</span>\(\displaystyle\int\frac{dx}{x^2-1}\)</div>
+    <div class="option"><input type="radio" name="q13" id="q13a"><label for="q13a">\(\tan^{-1}x\)</label></div>
+    <div class="option"><input type="radio" name="q13" id="q13b"><label for="q13b">\(\ln|x^2-1|\)</label></div>
+    <div class="option"><input type="radio" name="q13" id="q13c"><label for="q13c">\(\frac{1}{2}\ln\left|\frac{x-1}{x+1}\right|+C\)</label></div>
+    <div class="option"><input type="radio" name="q13" id="q13d"><label for="q13d">\(\sec^{-1}x\)</label></div></div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q14.</span>\(\displaystyle\int\tan x\,dx\)</div>
+    <div class="option"><input type="radio" name="q14" id="q14a"><label for="q14a">\(\ln|\sec x|+C\)</label></div>
+    <div class="option"><input type="radio" name="q14" id="q14b"><label for="q14b">\(\sec x\)</label></div>
+    <div class="option"><input type="radio" name="q14" id="q14c"><label for="q14c">\(\cos x\)</label></div>
+    <div class="option"><input type="radio" name="q14" id="q14d"><label for="q14d">\(\sin x\)</label></div></div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q15.</span>\(\displaystyle\int\frac{dx}{\sqrt{1-x^2}}\)</div>
+    <div class="option"><input type="radio" name="q15" id="q15a"><label for="q15a">\(\cos^{-1}x\)</label></div>
+    <div class="option"><input type="radio" name="q15" id="q15b"><label for="q15b">\(\sin^{-1}x+C\)</label></div>
+    <div class="option"><input type="radio" name="q15" id="q15c"><label for="q15c">\(\tan^{-1}x\)</label></div>
+    <div class="option"><input type="radio" name="q15" id="q15d"><label for="q15d">\(\sec^{-1}x\)</label></div></div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q16.</span>\(\displaystyle\int x^2e^x\,dx\)</div>
+    <div class="option"><input type="radio" name="q16" id="q16a"><label for="q16a">\(xe^x\)</label></div>
+    <div class="option"><input type="radio" name="q16" id="q16b"><label for="q16b">\(e^x(x^2)\)</label></div>
+    <div class="option"><input type="radio" name="q16" id="q16c"><label for="q16c">\(e^x(x^2-2x+2)+C\)</label></div>
+    <div class="option"><input type="radio" name="q16" id="q16d"><label for="q16d">\(e^x+C\)</label></div></div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q17.</span>\(\displaystyle\int\frac{dx}{x\sqrt{x^2-1}}\)</div>
+    <div class="option"><input type="radio" name="q17" id="q17a"><label for="q17a">\(\tan^{-1}x\)</label></div>
+    <div class="option"><input type="radio" name="q17" id="q17b"><label for="q17b">\(\sec^{-1}x+C\)</label></div>
+    <div class="option"><input type="radio" name="q17" id="q17c"><label for="q17c">\(\sin^{-1}x\)</label></div>
+    <div class="option"><input type="radio" name="q17" id="q17d"><label for="q17d">\(\ln x\)</label></div></div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q18.</span>\(\displaystyle\int\sin^2 x\,dx\)</div>
+    <div class="option"><input type="radio" name="q18" id="q18a"><label for="q18a">\(\frac{x}{2}-\frac{\sin 2x}{4}+C\)</label></div>
+    <div class="option"><input type="radio" name="q18" id="q18b"><label for="q18b">\(\cos^2 x\)</label></div>
+    <div class="option"><input type="radio" name="q18" id="q18c"><label for="q18c">\(\tan x\)</label></div>
+    <div class="option"><input type="radio" name="q18" id="q18d"><label for="q18d">\(\sec x\)</label></div></div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q19.</span>\(\displaystyle\int\frac{dx}{x^2+2x+1}\)</div>
+    <div class="option"><input type="radio" name="q19" id="q19a"><label for="q19a">\(\ln x\)</label></div>
+    <div class="option"><input type="radio" name="q19" id="q19b"><label for="q19b">\(x^2\)</label></div>
+    <div class="option"><input type="radio" name="q19" id="q19c"><label for="q19c">\(-\dfrac{1}{x+1}+C\)</label></div>
+    <div class="option"><input type="radio" name="q19" id="q19d"><label for="q19d">\(\dfrac{1}{x}\)</label></div></div>
+  <div class="q-card"><div class="q-text"><span class="qnum">Q20.</span>\(\displaystyle\int\frac{e^x}{1+e^x}\,dx\)</div>
+    <div class="option"><input type="radio" name="q20" id="q20a"><label for="q20a">\(e^x\)</label></div>
+    <div class="option"><input type="radio" name="q20" id="q20b"><label for="q20b">\(\ln(1+e^x)+C\)</label></div>
+    <div class="option"><input type="radio" name="q20" id="q20c"><label for="q20c">\(1/e^x\)</label></div>
+    <div class="option"><input type="radio" name="q20" id="q20d"><label for="q20d">\(x\)</label></div></div>
+
+  <div class="submit-row">
+    <button class="btn-submit" onclick="submitTest()"><i class="fas fa-paper-plane"></i> Submit Test</button>
+  </div>
+  <div class="result-panel" id="resultPanel">
+    <div class="score" id="scoreNum">—</div>
+    <div class="out-of">out of 20</div>
+    <div class="verdict" id="verdict"></div>
+  </div>
+</div>
+<footer>Virtual Labs &copy; 2025 &nbsp;|&nbsp; <span>Pimpri Chinchwad College of Engineering</span></footer>
+<script>
+const answers={q1:'c',q2:'a',q3:'c',q4:'a',q5:'a',q6:'b',q7:'c',q8:'c',q9:'b',q10:'b',q11:'a',q12:'b',q13:'c',q14:'a',q15:'b',q16:'c',q17:'b',q18:'a',q19:'c',q20:'b'};
+function submitTest(){
+  let score=0;
+  for(const[q,correct]of Object.entries(answers)){
+    document.querySelectorAll(`input[name="${q}"]`).forEach(o=>{
+      const div=o.closest('.option'),sfx=o.id.replace(q,'');
+      if(sfx===correct){div.classList.add('correct');if(o.checked)score++;}
+      else if(o.checked)div.classList.add('wrong');
+      o.disabled=true;
+    });
+  }
+  document.getElementById('scoreNum').textContent=score;
+  document.getElementById('verdict').textContent=score>=16?'🎉 Excellent — Great integration skills!':score>=10?'👍 Good — Review some topics before the experiment.':'📖 Needs improvement — Brush up on integration first.';
+  const p=document.getElementById('resultPanel');p.style.display='block';p.scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>References – Fourier Series Virtual Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--bg:#f0f4ff;--surface:#fff;--surface2:#e8edf8;--navy:#1a2456;--mid:#2e4db3;--accent:#c0392b;--gold:#b06c0a;--text:#1e2d45;--muted:#5a6a85;--border:#cdd5e8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+header{background:var(--surface);border-bottom:3px solid var(--accent);padding:14px 36px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;box-shadow:0 2px 12px rgba(26,36,86,.09);}
+.logo-row{display:flex;align-items:center;gap:14px;}
+.logo-badge{width:46px;height:46px;background:var(--surface);border-radius:9px;border:1px solid var(--border);display:grid;place-items:center;overflow:hidden;}
+.logo-badge img{width:100%;height:100%;object-fit:contain;}
+.logo-text .l1{font-family:'Playfair Display',serif;font-size:13px;color:var(--navy);font-weight:700;}
+.logo-text .l2{font-size:10px;color:var(--muted);}
+.back-btn{display:flex;align-items:center;gap:8px;background:rgba(192,57,43,.07);border:1.5px solid rgba(192,57,43,.28);color:var(--accent);padding:8px 16px;border-radius:50px;text-decoration:none;font-size:13px;transition:.2s;}
+.back-btn:hover{background:rgba(192,57,43,.15);}
+.page{max-width:820px;margin:0 auto;padding:44px 28px 70px;}
+.page-title{font-family:'Playfair Display',serif;font-size:38px;color:var(--navy);margin-bottom:6px;}
+.page-title span{color:var(--accent);}
+.divider{width:60px;height:3px;background:var(--accent);border-radius:3px;margin-bottom:36px;}
+.ref{background:var(--surface);border:1.5px solid var(--border);border-left:4px solid var(--accent);border-radius:10px;padding:16px 22px;margin-bottom:12px;box-shadow:0 2px 6px rgba(26,36,86,.05);transition:.2s;}
+.ref:hover{border-left-color:var(--gold);transform:translateX(4px);box-shadow:0 4px 14px rgba(26,36,86,.1);}
+.ref-num{font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:5px;}
+.ref a{text-decoration:none;color:var(--mid);font-size:14.5px;line-height:1.7;}
+.ref a:hover{color:var(--gold);}
+footer{text-align:center;padding:22px;font-size:12px;color:var(--muted);border-top:1.5px solid var(--border);}
+footer span{color:var(--accent);font-weight:500;}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo-row">
+    <div class="logo-badge"><img src="https://raw.githubusercontent.com/dineshkute90/virtual_lab_LAUC/main/pccoe.png" alt="PCOE" onerror="this.src='https://via.placeholder.com/46x46/1a2456/fff?text=P'"></div>
+    <div class="logo-text"><div class="l1">APPLIED SCIENCES &amp; HUMANITIES</div><div class="l2">Pimpri Chinchwad College of Engineering</div></div>
+  </div>
+  <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Home</a>
+</header>
+<div class="page">
+  <div class="page-title">Reference <span>Materials</span></div>
+  <div class="divider"></div>
+  <div class="ref"><div class="ref-num">Reference 01</div><a href="https://ncert.nic.in/" target="_blank"><i class="fas fa-external-link-alt" style="font-size:11px;margin-right:6px;"></i>National Council of Educational Research and Training (NCERT) — Mathematics Textbook for Class XII, Part I &amp; II, New Delhi.</a></div>
+  <div class="ref"><div class="ref-num">Reference 02</div><a href="https://byjus.com/rd-sharma-solutions/class-12-maths-chapter-19-indefinite-integrals/" target="_blank"><i class="fas fa-external-link-alt" style="font-size:11px;margin-right:6px;"></i>R. D. Sharma — Mathematics for Class XII, Dhanpat Rai Publications.</a></div>
+  <div class="ref"><div class="ref-num">Reference 03</div><a href="https://www.scribd.com/document/484525464/higher-engineering-mathematics-b-s-grewal-pdf" target="_blank"><i class="fas fa-external-link-alt" style="font-size:11px;margin-right:6px;"></i>B. S. Grewal — Higher Engineering Mathematics, Khanna Publishers.</a></div>
+  <div class="ref"><div class="ref-num">Reference 04</div><a href="https://rodrigopacios.github.io/mrpacios/download/Thomas_Calculus.pdf" target="_blank"><i class="fas fa-external-link-alt" style="font-size:11px;margin-right:6px;"></i>Thomas, Weir &amp; Hass — Thomas' Calculus: Early Transcendentals, Pearson Education.</a></div>
+  <div class="ref"><div class="ref-num">Reference 05</div><a href="https://tutorial.math.lamar.edu/classes/calcii/inttechintro.aspx" target="_blank"><i class="fas fa-external-link-alt" style="font-size:11px;margin-right:6px;"></i>Dawkins, P. — Paul's Online Math Notes: Integration Techniques and Applications.</a></div>
+  <div class="ref"><div class="ref-num">Reference 06</div><a href="https://ocw.mit.edu/courses/18-01sc-single-variable-calculus-fall-2010/" target="_blank"><i class="fas fa-external-link-alt" style="font-size:11px;margin-right:6px;"></i>MIT OpenCourseWare — Single Variable Calculus, Massachusetts Institute of Technology.</a></div>
+  <div class="ref"><div class="ref-num">Reference 07</div><a href="https://www.khanacademy.org/math/integral-calculus" target="_blank"><i class="fas fa-external-link-alt" style="font-size:11px;margin-right:6px;"></i>Khan Academy — Integral Calculus and Practice Exercises.</a></div>
+  <div class="ref"><div class="ref-num">Reference 08</div><a href="https://www.w3schools.com/" target="_blank"><i class="fas fa-external-link-alt" style="font-size:11px;margin-right:6px;"></i>W3Schools — HTML, CSS and JavaScript Documentation.</a></div>
+</div>
+<footer>Virtual Labs &copy; 2025 &nbsp;|&nbsp; <span>Pimpri Chinchwad College of Engineering</span></footer>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Theory – Fourier Series Virtual Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+:root{--bg:#f0f4ff;--surface:#ffffff;--surface2:#e8edf8;--navy:#1a2456;--mid:#2e4db3;--accent:#c0392b;--gold:#c47d0a;--green:#1e8449;--blue:#1a6bb5;--text:#1e2d45;--muted:#5a6a85;--border:#cdd5e8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+header{background:var(--surface);border-bottom:3px solid var(--accent);padding:14px 36px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;box-shadow:0 2px 12px rgba(26,36,86,.09);}
+.logo-row{display:flex;align-items:center;gap:14px;}
+.logo-badge{width:46px;height:46px;background:var(--surface);border-radius:9px;border:1px solid var(--border);display:grid;place-items:center;overflow:hidden;}
+.logo-badge img{width:100%;height:100%;object-fit:contain;}
+.logo-text .l1{font-family:'Playfair Display',serif;font-size:13px;color:var(--navy);font-weight:700;}
+.logo-text .l2{font-size:10px;color:var(--muted);}
+.back-btn{display:flex;align-items:center;gap:8px;background:rgba(192,57,43,.07);border:1.5px solid rgba(192,57,43,.28);color:var(--accent);padding:8px 16px;border-radius:50px;text-decoration:none;font-size:13px;transition:.2s;}
+.back-btn:hover{background:rgba(192,57,43,.15);}
+.page{max-width:880px;margin:0 auto;padding:44px 28px 70px;}
+.page-title{font-family:'Playfair Display',serif;font-size:36px;color:var(--navy);margin-bottom:6px;}
+.page-title span{color:var(--accent);}
+.divider{width:60px;height:3px;background:var(--accent);border-radius:3px;margin-bottom:32px;}
+.prose{font-size:15.5px;line-height:1.95;color:#3a4a65;margin-bottom:18px;text-align:justify;}
+.prose b{color:var(--navy);}
+.sec-head{font-family:'Playfair Display',serif;font-size:21px;color:var(--navy);margin:34px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--border);}
+.theory-card{background:var(--surface);border:1.5px solid var(--border);border-left:4px solid var(--mid);border-radius:12px;padding:22px 26px;margin-bottom:16px;box-shadow:0 2px 8px rgba(26,36,86,.05);}
+.tc-label{font-size:10px;color:var(--mid);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;font-weight:600;}
+.formula-center{text-align:center;font-size:16px;color:var(--text);line-height:2.4;padding:8px 0;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0;}
+@media(max-width:600px){.info-grid{grid-template-columns:1fr;}}
+.info-box{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:16px 18px;}
+.info-box h4{color:var(--navy);font-size:14px;margin-bottom:8px;font-weight:600;}
+.info-box p{font-size:13.5px;color:#3a4a65;line-height:1.8;}
+footer{text-align:center;padding:22px;font-size:12px;color:var(--muted);border-top:1.5px solid var(--border);}
+footer span{color:var(--accent);font-weight:500;}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo-row">
+    <div class="logo-badge"><img src="https://raw.githubusercontent.com/dineshkute90/virtual_lab_LAUC/main/pccoe.png" alt="PCOE" onerror="this.src='https://via.placeholder.com/46x46/1a2456/fff?text=P'"></div>
+    <div class="logo-text"><div class="l1">APPLIED SCIENCES &amp; HUMANITIES</div><div class="l2">Pimpri Chinchwad College of Engineering</div></div>
+  </div>
+  <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Home</a>
+</header>
+<div class="page">
+  <div class="page-title">Fourier Series <span>Theory</span></div>
+  <div class="divider"></div>
+  <p class="prose">A <b>Fourier series</b> is an expansion of a periodic function in terms of an infinite sum of sines and cosines. Any piecewise smooth periodic function can be expressed as a Fourier series using the orthogonality of sine and cosine functions.</p>
+
+  <div class="sec-head">General Fourier Series</div>
+  <div class="theory-card">
+    <div class="tc-label">General Form — period 2L</div>
+    <div class="formula-center">\[\displaystyle f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty}\left[a_n\cos\frac{n\pi x}{L} + b_n\sin\frac{n\pi x}{L}\right]\]</div>
+  </div>
+
+  <div class="sec-head">Fourier Coefficients</div>
+  <div class="theory-card">
+    <div class="tc-label">Integral Formulas</div>
+    <div class="formula-center">
+      \[\displaystyle a_0 = \frac{1}{L}\int_{-L}^{L}f(x)\,dx\]
+      \[\displaystyle a_n = \frac{1}{L}\int_{-L}^{L}f(x)\cos\frac{n\pi x}{L}\,dx\]
+      \[\displaystyle b_n = \frac{1}{L}\int_{-L}^{L}f(x)\sin\frac{n\pi x}{L}\,dx\]
+    </div>
+  </div>
+
+  <div class="sec-head">Even and Odd Functions</div>
+  <div class="info-grid">
+    <div class="info-box">
+      <h4><i class="fas fa-balance-scale" style="color:var(--mid);margin-right:6px;"></i>Even — f(−x) = f(x)</h4>
+      <p>Only cosine terms; all \(b_n = 0\).<br><br>
+        \(a_0 = \dfrac{2}{L}\displaystyle\int_0^{L}f(x)\,dx\)<br><br>
+        \(a_n = \dfrac{2}{L}\displaystyle\int_0^{L}f(x)\cos\dfrac{n\pi x}{L}\,dx\)
+      </p>
+    </div>
+    <div class="info-box">
+      <h4><i class="fas fa-balance-scale-right" style="color:var(--mid);margin-right:6px;"></i>Odd — f(−x) = −f(x)</h4>
+      <p>Only sine terms; \(a_0=0\) and all \(a_n=0\).<br><br>
+        \(b_n = \dfrac{2}{L}\displaystyle\int_0^{L}f(x)\sin\dfrac{n\pi x}{L}\,dx\)
+      </p>
+    </div>
+  </div>
+
+  <div class="sec-head">Dirichlet's Conditions</div>
+  <div class="theory-card">
+    <div class="tc-label">Sufficient Conditions for Convergence</div>
+    <p style="color:#3a4a65;font-size:14.5px;line-height:2.1;">
+      1. f(x) is periodic with period 2L.<br>
+      2. f(x) is single-valued and bounded on [−L, L].<br>
+      3. f(x) has a finite number of maxima and minima in [−L, L].<br>
+      4. f(x) has a finite number of discontinuities in [−L, L].<br><br>
+      At a point of continuity the series converges to f(x). At a jump discontinuity, it converges to the average of the left and right limits.
+    </p>
+  </div>
+
+  <div class="sec-head">Parseval's Identity</div>
+  <div class="theory-card">
+    <div class="tc-label">Energy Relation</div>
+    <div class="formula-center">\[\displaystyle \frac{1}{L}\int_{-L}^{L}[f(x)]^2\,dx = \frac{a_0^2}{2} + \sum_{n=1}^{\infty}(a_n^2 + b_n^2)\]</div>
+  </div>
+</div>
+<footer>Virtual Labs &copy; 2025 &nbsp;|&nbsp; <span>Pimpri Chinchwad College of Engineering</span></footer>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Fourier Series Simulation – Virtual Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --bg:#f0f4ff;--surface:#ffffff;--surface2:#e8edf8;--surface3:#dde4f5;
+  --navy:#1a2456;--mid:#2e4db3;--accent:#c0392b;
+  --gold:#c47d0a;--green:#1e8449;--blue:#1a6bb5;
+  --text:#1e2d45;--muted:#5a6a85;--border:#cdd5e8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* HEADER */
+header{background:var(--surface);border-bottom:3px solid var(--accent);padding:14px 36px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:99;box-shadow:0 2px 12px rgba(26,36,86,.09);}
+.logo-row{display:flex;align-items:center;gap:14px;}
+.logo-badge{width:46px;height:46px;background:var(--surface);border-radius:9px;border:1px solid var(--border);display:grid;place-items:center;overflow:hidden;}
+.logo-badge img{width:100%;height:100%;object-fit:contain;}
+.logo-text .l1{font-family:'Playfair Display',serif;font-size:13px;color:var(--navy);font-weight:700;}
+.logo-text .l2{font-size:10px;color:var(--muted);}
+.back-btn{display:flex;align-items:center;gap:8px;background:rgba(192,57,43,.07);border:1.5px solid rgba(192,57,43,.28);color:var(--accent);padding:8px 16px;border-radius:50px;text-decoration:none;font-size:13px;transition:.2s;}
+.back-btn:hover{background:rgba(192,57,43,.15);}
+
+/* PAGE */
+.page{max-width:980px;margin:0 auto;padding:40px 28px 80px;}
+.page-title{font-family:'Playfair Display',serif;font-size:36px;color:var(--navy);margin-bottom:6px;}
+.page-title span{color:var(--accent);}
+.divider{width:60px;height:3px;background:var(--accent);border-radius:3px;margin-bottom:10px;}
+.subtitle{color:var(--muted);font-size:14px;margin-bottom:32px;}
+
+/* INPUT PANEL */
+.input-panel{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:28px 32px;margin-bottom:28px;box-shadow:0 2px 10px rgba(26,36,86,.07);}
+.panel-title{font-family:'Playfair Display',serif;font-size:17px;color:var(--navy);display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.panel-title i{color:var(--accent);}
+.form-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;margin-bottom:20px;}
+@media(max-width:620px){.form-grid{grid-template-columns:1fr;}}
+.field label{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;font-weight:600;}
+.field input{width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:15px;font-family:'DM Sans',sans-serif;outline:none;transition:.2s;}
+.field input:focus{border-color:var(--mid);background:#fff;}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap;}
+.btn{padding:11px 22px;border:none;border-radius:9px;font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;transition:.2s;display:inline-flex;align-items:center;gap:8px;}
+.btn-primary{background:var(--accent);color:#fff;}
+.btn-primary:hover{background:#a93226;transform:translateY(-1px);}
+.btn-outline{background:transparent;border:1.5px solid rgba(192,57,43,.35);color:var(--accent);}
+.btn-outline:hover{background:rgba(192,57,43,.08);}
+.btn-verify{background:rgba(30,132,73,.1);border:1.5px solid rgba(30,132,73,.35);color:var(--green);}
+.btn-verify:hover{background:rgba(30,132,73,.2);}
+#errorMsg{color:var(--accent);font-size:13px;margin-top:12px;display:none;}
+
+/* PROGRESS */
+#stepArea{display:none;}
+.progress-wrap{display:flex;align-items:flex-start;gap:0;margin-bottom:28px;overflow-x:auto;padding-bottom:6px;}
+.sdot{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:80px;position:relative;flex:1;}
+.sdot:not(:last-child)::after{content:'';position:absolute;top:14px;left:calc(50%+15px);width:calc(100% - 30px);height:2px;background:var(--border);}
+.sdot.done::after{background:var(--green);}
+.dot{width:28px;height:28px;border-radius:50%;background:var(--surface2);border:2px solid var(--border);display:grid;place-items:center;font-size:11px;font-weight:600;transition:.3s;flex-shrink:0;color:var(--muted);}
+.sdot.active .dot{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 0 12px rgba(192,57,43,.3);}
+.sdot.done .dot{background:rgba(30,132,73,.12);border-color:var(--green);color:var(--green);}
+.dlabel{font-size:9.5px;color:var(--muted);white-space:nowrap;text-align:center;}
+.sdot.active .dlabel{color:var(--accent);font-weight:600;}
+.sdot.done .dlabel{color:var(--green);}
+
+/* STEP CARD */
+.step-card{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:28px 30px;margin-bottom:16px;box-shadow:0 2px 10px rgba(26,36,86,.07);animation:fadeUp .32s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.step-tag{font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px;font-weight:700;}
+.step-card h4{font-family:'Playfair Display',serif;font-size:21px;color:var(--navy);margin-bottom:18px;}
+.expl{color:#3a4a65;font-size:14.5px;line-height:1.85;margin-bottom:14px;}
+.expl b{color:var(--navy);}
+
+/* FORMULA BOX */
+.formula-box{background:var(--surface2);border:1.5px solid var(--border);border-left:4px solid var(--gold);border-radius:12px;padding:18px 24px;margin-bottom:14px;}
+.fb-label{font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px;font-weight:700;}
+.formula-body{text-align:center;font-size:16px;color:var(--text);line-height:2.4;}
+.formula-body .sub-line{font-size:13px;color:var(--muted);margin-top:8px;}
+
+/* ANSWER BOX */
+.answer-box{background:#eef4ff;border:1.5px solid #b8cef5;border-left:4px solid var(--blue);border-radius:12px;padding:20px 24px;margin-top:4px;}
+.ab-label{font-size:10px;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:6px;font-weight:700;}
+.answer-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.ans-prefix{font-size:15px;color:var(--navy);white-space:nowrap;font-weight:600;}
+.ans-input{flex:1;min-width:160px;background:#fff;border:1.5px solid #b8cef5;border-radius:8px;padding:10px 14px;color:var(--text);font-size:15px;font-family:'DM Sans',sans-serif;outline:none;transition:.2s;}
+.ans-input:focus{border-color:var(--blue);}
+.ans-hint{font-size:12px;color:var(--muted);margin-top:8px;font-style:italic;}
+.ans-hint code{background:var(--surface3);padding:1px 5px;border-radius:4px;font-style:normal;color:var(--navy);}
+
+/* VERIFY RESULT */
+.verify-result{margin-top:12px;border-radius:10px;padding:13px 18px;display:none;font-size:14px;line-height:1.8;}
+.verify-result.correct{background:rgba(30,132,73,.08);border:1.5px solid rgba(30,132,73,.3);}
+.verify-result.wrong{background:rgba(192,57,43,.06);border:1.5px solid rgba(192,57,43,.25);}
+.vr-icon{font-size:16px;margin-right:6px;}
+.ca-val{background:rgba(30,132,73,.08);border:1.5px solid rgba(30,132,73,.22);border-radius:6px;padding:9px 14px;margin-top:8px;text-align:center;font-size:15px;color:var(--green);font-weight:600;}
+
+/* BADGES */
+.zero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;padding:12px 20px;font-size:15px;color:var(--muted);margin:10px 0;}
+.sym-badge{display:inline-flex;align-items:center;gap:6px;background:#eef4ff;border:1.5px solid #b8cef5;border-radius:20px;padding:6px 14px;font-size:13px;color:var(--blue);margin-bottom:14px;font-weight:500;}
+
+/* FINAL SERIES */
+.series-block{background:#fff8f0;border:1.5px solid #f0cfa0;border-left:4px solid var(--gold);border-radius:14px;padding:24px 28px;margin-top:6px;}
+.sb-label{font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;font-weight:700;}
+.deriv-line{font-size:15px;color:#3a4a65;margin:10px 0;line-height:2.2;}
+.series-final{background:#fff3f3;border:1.5px solid #f0b8b8;border-radius:10px;padding:18px 22px;text-align:center;margin-top:14px;}
+.sf-label{font-size:10px;color:var(--accent);letter-spacing:1px;margin-bottom:8px;text-transform:uppercase;font-weight:700;}
+
+/* NAV */
+.nav-btns{display:flex;gap:12px;margin-top:20px;}
+
+/* GRAPH */
+#graphSection{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:26px 30px;margin-top:14px;display:none;box-shadow:0 2px 10px rgba(26,36,86,.07);}
+.graph-title{font-family:'Playfair Display',serif;font-size:19px;color:var(--navy);margin-bottom:6px;}
+.graph-desc{color:var(--muted);font-size:13px;margin-bottom:16px;line-height:1.7;}
+.terms-row{display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap;}
+.terms-row label{font-size:13px;color:var(--muted);}
+#termsRange{accent-color:var(--accent);width:160px;cursor:pointer;}
+#termsVal{font-weight:700;color:var(--accent);min-width:22px;}
+canvas#fourierChart{border-radius:10px;background:#fafbff;}
+
+footer{text-align:center;padding:22px;font-size:12px;color:var(--muted);border-top:1.5px solid var(--border);}
+footer span{color:var(--accent);font-weight:500;}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo-row">
+    <div class="logo-badge"><img src="https://raw.githubusercontent.com/dineshkute90/virtual_lab_LAUC/main/pccoe.png" alt="PCOE" onerror="this.src='https://via.placeholder.com/46x46/1a2456/fff?text=P'"></div>
+    <div class="logo-text"><div class="l1">APPLIED SCIENCES &amp; HUMANITIES</div><div class="l2">Pimpri Chinchwad College of Engineering</div></div>
+  </div>
+  <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Home</a>
+</header>
+
+<div class="page">
+  <div class="page-title">Fourier Series <span>Simulation</span></div>
+  <div class="divider"></div>
+  <p class="subtitle">Enter your function and limits. Work through each coefficient step by step — compute, enter your answer, and verify before moving on.</p>
+
+  <div class="input-panel">
+    <div class="panel-title"><i class="fas fa-calculator"></i> Enter Function Details</div>
+    <div class="form-grid">
+      <div class="field"><label>f(x)</label><input id="funcInput" value="pi^2 - x^2" placeholder="e.g. x, x^2, pi^2 - x^2"></div>
+      <div class="field"><label>Lower Limit (a)</label><input id="l1" value="-pi" placeholder="-pi"></div>
+      <div class="field"><label>Upper Limit (b)</label><input id="l2" value="pi" placeholder="pi"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="startSolver()"><i class="fas fa-play"></i> Solve Step by Step</button>
+      <button class="btn btn-outline" onclick="resetAll()"><i class="fas fa-redo"></i> Reset</button>
+    </div>
+    <div id="errorMsg"></div>
+  </div>
+
+  <div id="stepArea">
+    <div class="progress-wrap" id="stepProgress"></div>
+    <div id="stepContent"></div>
+    <div class="nav-btns">
+      <button class="btn btn-outline" id="btnPrev" onclick="prevStep()" style="display:none"><i class="fas fa-arrow-left"></i> Previous</button>
+      <button class="btn btn-primary" id="btnNext" onclick="nextStep()"><i class="fas fa-arrow-right"></i> Next Step</button>
+    </div>
+  </div>
+
+  <div id="graphSection">
+    <div class="graph-title"><i class="fas fa-wave-square" style="color:var(--accent);margin-right:8px;"></i>Graphical Representation</div>
+    <p class="graph-desc">
+      <b style="color:var(--gold)">Orange</b> = original f(x) &nbsp;|&nbsp; <b style="color:var(--blue)">Blue dashed</b> = Fourier approximation<br>
+      Drag the slider to add more terms and watch the series converge to f(x).
+    </p>
+    <div class="terms-row">
+      <label>Terms (N):</label>
+      <input type="range" id="termsRange" min="1" max="30" value="5" oninput="updateTerms(this.value)">
+      <span id="termsVal">5</span>
+    </div>
+    <canvas id="fourierChart" height="130"></canvas>
+  </div>
+</div>
+
+<footer>Virtual Labs &copy; 2025 &nbsp;|&nbsp; <span>Pimpri Chinchwad College of Engineering</span></footer>
+
+<script>
+const PI = Math.PI;
+let chartInst = null;
+let currentStep = 0;
+const TOTAL_STEPS = 6;
+const STEP_LABELS = ['Setup','a₀','aₙ','bₙ','Series','Graph'];
+let C = {};
+
+function evalF(exprC,x){ return exprC.evaluate({x,pi:PI,e:Math.E}); }
+function integrate(fn,a,b,n=4000){
+  const h=(b-a)/n; let s=0;
+  for(let i=0;i<=n;i++) s+=(i===0||i===n?0.5:1)*fn(a+i*h);
+  return s*h;
+}
+function checkSym(exprC,a,b){
+  if(Math.abs(a+b)>1e-9) return {ev:false,od:false};
+  const pts=[0.41,1.13,1.79,2.33,2.97]; let ev=true,od=true;
+  for(const t of pts){
+    const fp=evalF(exprC,t), fm=evalF(exprC,-t);
+    if(Math.abs(fp-fm)>1e-6) ev=false;
+    if(Math.abs(fp+fm)>1e-6) od=false;
+  }
+  return {ev,od};
+}
+function fD(v,d=5){ return Math.abs(v)<1e-8?'0':parseFloat(v.toFixed(d)).toString(); }
+function ts(el){ if(window.MathJax) MathJax.typesetPromise([el]).catch(()=>{}); }
+
+function startSolver(){
+  const fStr=document.getElementById('funcInput').value.trim();
+  const l1s=document.getElementById('l1').value.trim();
+  const l2s=document.getElementById('l2').value.trim();
+  const err=document.getElementById('errorMsg'); err.style.display='none';
+  let exprC,a,b;
+  try{
+    exprC=math.compile(fStr);
+    a=math.evaluate(l1s.replace(/pi/g,'3.14159265358979'));
+    b=math.evaluate(l2s.replace(/pi/g,'3.14159265358979'));
+  }catch(e){err.textContent='Parse error: '+e.message;err.style.display='block';return;}
+  if(b<=a){err.textContent='Upper limit must be greater than lower limit.';err.style.display='block';return;}
+  const L=(b-a)/2; const sym=checkSym(exprC,a,b);
+  const a0_v=(1/L)*integrate(x=>evalF(exprC,x),a,b);
+  const an=[],bn=[];
+  for(let n=1;n<=15;n++){
+    an.push((1/L)*integrate(x=>evalF(exprC,x)*Math.cos(n*PI*x/L),a,b));
+    bn.push((1/L)*integrate(x=>evalF(exprC,x)*Math.sin(n*PI*x/L),a,b));
+  }
+  const Ltex=Math.abs(L-PI)<0.001?'\\pi':Math.abs(L-PI/2)<0.001?'\\frac{\\pi}{2}':fD(L);
+  C={fStr,a,b,L,afmt:l1s,bfmt:l2s,Ltex,a0_v,an,bn,exprC,sym};
+  currentStep=0;
+  document.getElementById('stepArea').style.display='block';
+  document.getElementById('graphSection').style.display='none';
+  renderProg(); renderStep();
+}
+
+function renderProg(){
+  document.getElementById('stepProgress').innerHTML=
+    STEP_LABELS.map((l,i)=>`<div class="sdot ${i<currentStep?'done':i===currentStep?'active':''}">
+      <div class="dot">${i<currentStep?'✓':(i+1)}</div>
+      <div class="dlabel">${l}</div></div>`).join('');
+}
+
+function renderStep(){
+  const c=document.getElementById('stepContent');
+  c.innerHTML=buildHTML(currentStep);
+  document.getElementById('btnPrev').style.display=currentStep===0?'none':'inline-flex';
+  const nb=document.getElementById('btnNext');
+  if(currentStep===TOTAL_STEPS-1){nb.innerHTML='<i class="fas fa-chart-line"></i> Show Graph';nb.onclick=showGraph;}
+  else{nb.innerHTML='<i class="fas fa-arrow-right"></i> Next Step';nb.onclick=nextStep;}
+  setTimeout(()=>ts(c),90);
+}
+
+function buildHTML(s){
+  const {fStr,afmt,bfmt,Ltex,a0_v,an,bn,sym}=C;
+  if(s===0){
+    const symNote=sym.ev
+      ?`<div class="sym-badge"><i class="fas fa-balance-scale"></i>&nbsp;f(x) is <b>Even</b> — the series will contain only cosine terms (b<sub>n</sub> = 0)</div>`
+      :sym.od
+      ?`<div class="sym-badge"><i class="fas fa-balance-scale-right"></i>&nbsp;f(x) is <b>Odd</b> — the series will contain only sine terms (a<sub>0</sub> = 0, a<sub>n</sub> = 0)</div>`
+      :`<div class="sym-badge"><i class="fas fa-info-circle"></i>&nbsp;f(x) is <b>neither even nor odd</b> — all coefficients may be non-zero</div>`;
+    return `<div class="step-card"><div class="step-tag">Step 1 of 6</div><h4>Setup — Function &amp; Interval</h4>
+      <div class="expl">Given &nbsp;<b>f(x) = ${fStr}</b>&nbsp; on &nbsp;<b>[${afmt}, ${bfmt}]</b></div>
+      <div class="formula-box"><div class="fb-label"><i class="fas fa-ruler"></i> Half-period L</div>
+        <div class="formula-body">\\(\\displaystyle L = \\frac{b-a}{2} = \\frac{${bfmt}-(${afmt})}{2} = ${Ltex}\\)</div></div>
+      ${symNote}
+      <div class="formula-box"><div class="fb-label"><i class="fas fa-sigma"></i> General Fourier Series</div>
+        <div class="formula-body">\\(\\displaystyle f(x) = \\frac{a_0}{2} + \\sum_{n=1}^{\\infty}\\!\\left[a_n\\cos\\frac{n\\pi x}{${Ltex}} + b_n\\sin\\frac{n\\pi x}{${Ltex}}\\right]\\)</div></div>
+    </div>`;
+  }
+  if(s===1){
+    /* Always ask student — even for odd functions so they discover a0=0 themselves */
+    const symHint=sym.ev
+      ?`<div class="sub-line">f(x) is even &rarr; use \\(a_0=\\dfrac{2}{${Ltex}}\\displaystyle\\int_0^{${bfmt}}(${fStr})\\,dx\\)</div>`
+      :sym.od
+      ?`<div class="sub-line">Hint: f(x) is odd on a symmetric interval — what is \\(\\int_{${afmt}}^{${bfmt}} f(x)\\,dx\\) ?</div>`
+      :'';
+    return `<div class="step-card"><div class="step-tag">Step 2 of 6</div><h4>Compute a₀ — Constant Term</h4>
+      <div class="formula-box"><div class="fb-label"><i class="fas fa-book-open"></i> Formula (with your values substituted)</div>
+        <div class="formula-body">\\(\\displaystyle a_0 = \\frac{1}{${Ltex}}\\int_{${afmt}}^{${bfmt}}(${fStr})\\,dx\\)
+          ${symHint}</div></div>
+      <div class="answer-box"><div class="ab-label"><i class="fas fa-pencil-alt"></i> Your Answer</div>
+        <div class="expl">Evaluate the integral and enter the value of a₀.<br>Use <code>pi</code> for π and <code>n</code> if needed. E.g. <code>4*pi^2/3</code> or <code>0</code>.</div>
+        <div class="answer-row"><span class="ans-prefix">a₀ =</span>
+          <input class="ans-input" id="ans_a0" placeholder="e.g.  4*pi^2/3  or  0">
+          <button class="btn btn-verify" onclick="verifyA0()"><i class="fas fa-check"></i> Verify</button>
+        </div>
+        <div class="verify-result" id="vr_a0"></div></div>
+    </div>`;
+  }
+  if(s===2){
+    const symHint=sym.ev
+      ?`<div class="sub-line">f(x) is even &rarr; use \\(a_n=\\dfrac{2}{${Ltex}}\\displaystyle\\int_0^{${bfmt}}(${fStr})\\cos\\dfrac{n\\pi x}{${Ltex}}\\,dx\\)</div>`
+      :sym.od
+      ?`<div class="sub-line">Hint: f(x) is odd, cos is even — their product is odd on a symmetric interval.</div>`
+      :'';
+    return `<div class="step-card"><div class="step-tag">Step 3 of 6</div><h4>Compute aₙ — Cosine Coefficients</h4>
+      <div class="formula-box"><div class="fb-label"><i class="fas fa-book-open"></i> Formula (with your values substituted)</div>
+        <div class="formula-body">\\(\\displaystyle a_n = \\frac{1}{${Ltex}}\\int_{${afmt}}^{${bfmt}}(${fStr})\\cos\\frac{n\\pi x}{${Ltex}}\\,dx\\)
+          ${symHint}</div></div>
+      <div class="answer-box"><div class="ab-label"><i class="fas fa-pencil-alt"></i> Your Answer</div>
+        <div class="expl">Enter aₙ as a formula in <b>n</b> and/or <b>pi</b>. The verifier checks your formula at multiple values of n automatically.</div>
+        <div class="answer-row"><span class="ans-prefix">aₙ =</span>
+          <input class="ans-input" id="ans_an" placeholder="e.g.  -4*(-1)^n/n^2  or  0">
+          <button class="btn btn-verify" onclick="verifyAn()"><i class="fas fa-check"></i> Verify</button>
+        </div>
+        <div class="ans-hint">e.g. <code>-4*(-1)^n/n^2</code> &nbsp;or&nbsp; <code>2*pi/n</code> &nbsp;or&nbsp; <code>(-1)^(n+1)*4/(n^2*pi)</code> &nbsp;or&nbsp; <code>0</code></div>
+        <div class="verify-result" id="vr_an"></div></div>
+    </div>`;
+  }
+  if(s===3){
+    const symHint=sym.od
+      ?`<div class="sub-line">f(x) is odd &rarr; use \\(b_n=\\dfrac{2}{${Ltex}}\\displaystyle\\int_0^{${bfmt}}(${fStr})\\sin\\dfrac{n\\pi x}{${Ltex}}\\,dx\\)</div>`
+      :sym.ev
+      ?`<div class="sub-line">Hint: f(x) is even, sin is odd — their product is odd on a symmetric interval.</div>`
+      :'';
+    return `<div class="step-card"><div class="step-tag">Step 4 of 6</div><h4>Compute bₙ — Sine Coefficients</h4>
+      <div class="formula-box"><div class="fb-label"><i class="fas fa-book-open"></i> Formula (with your values substituted)</div>
+        <div class="formula-body">\\(\\displaystyle b_n = \\frac{1}{${Ltex}}\\int_{${afmt}}^{${bfmt}}(${fStr})\\sin\\frac{n\\pi x}{${Ltex}}\\,dx\\)
+          ${symHint}</div></div>
+      <div class="answer-box"><div class="ab-label"><i class="fas fa-pencil-alt"></i> Your Answer</div>
+        <div class="expl">Enter bₙ as a formula in <b>n</b> and/or <b>pi</b>. The verifier checks your formula at multiple values of n automatically.</div>
+        <div class="answer-row"><span class="ans-prefix">bₙ =</span>
+          <input class="ans-input" id="ans_bn" placeholder="e.g.  2*(-1)^(n+1)/n  or  0">
+          <button class="btn btn-verify" onclick="verifyBn()"><i class="fas fa-check"></i> Verify</button>
+        </div>
+        <div class="ans-hint">e.g. <code>2*(-1)^(n+1)/n</code> &nbsp;or&nbsp; <code>4*pi/n^2</code> &nbsp;or&nbsp; <code>12/(n^3*pi^3) - 2/(n*pi)</code> &nbsp;or&nbsp; <code>0</code></div>
+        <div class="verify-result" id="vr_bn"></div></div>
+    </div>`;
+  }
+  if(s===4){
+    return `<div class="step-card"><div class="step-tag">Step 5 of 6</div><h4>Final Fourier Series</h4>
+      <div class="expl">Complete derivation and Fourier series for your function.</div>
+      ${buildFinalSeries()}</div>`;
+  }
+  if(s===5){
+    return `<div class="step-card"><div class="step-tag">Step 6 of 6</div><h4>Graphical Representation</h4>
+      <div class="expl">The interactive graph compares <b>f(x)</b> with its Fourier approximation.<br>
+        Click <b>Show Graph</b> below, then use the slider to add more terms and watch convergence.</div>
+      <div class="expl" style="color:var(--green);margin-top:4px;"><i class="fas fa-check-circle"></i>&nbsp; All steps complete!</div>
+    </div>`;
+  }
+  return '';
+}
+
+/* ─── NICE SYMBOLIC HELPERS ─── */
+function nicePiFrac(v){
+  /* Returns LaTeX for a number that is a fraction of pi, pi^2, or an integer/simple fraction.
+     Always tries pi-based representations first. */
+  if(Math.abs(v)<1e-8) return '0';
+  // Integer
+  for(let k=1;k<=30;k++){
+    if(Math.abs(v-k)<0.003) return `${k}`;
+    if(Math.abs(v+k)<0.003) return `-${k}`;
+  }
+  // Simple fractions k/m
+  for(let k=1;k<=20;k++) for(let m=2;m<=12;m++){
+    if(Math.abs(v-k/m)<0.003) return `\\frac{${k}}{${m}}`;
+    if(Math.abs(v+k/m)<0.003) return `-\\frac{${k}}{${m}}`;
+  }
+  // k*pi
+  const piv=v/Math.PI;
+  for(let k=1;k<=12;k++){
+    if(Math.abs(piv-k)<0.003)   return k===1?'\\pi':`${k}\\pi`;
+    if(Math.abs(piv+k)<0.003)   return k===1?'-\\pi':`-${k}\\pi`;
+    if(Math.abs(piv-k/2)<0.003) return k===1?`\\frac{\\pi}{2}`:`\\frac{${k}\\pi}{2}`;
+    if(Math.abs(piv+k/2)<0.003) return k===1?`-\\frac{\\pi}{2}`:`-\\frac{${k}\\pi}{2}`;
+    for(let d=2;d<=8;d++){
+      if(Math.abs(piv-k/d)<0.003) return `\\frac{${k}\\pi}{${d}}`;
+      if(Math.abs(piv+k/d)<0.003) return `-\\frac{${k}\\pi}{${d}}`;
+    }
+  }
+  // k*pi^2
+  const pi2v=v/(Math.PI*Math.PI);
+  for(let k=1;k<=8;k++){
+    if(Math.abs(pi2v-k)<0.003)   return k===1?'\\pi^2':`${k}\\pi^2`;
+    if(Math.abs(pi2v+k)<0.003)   return k===1?'-\\pi^2':`-${k}\\pi^2`;
+    for(let d=2;d<=12;d++){
+      if(Math.abs(pi2v-k/d)<0.003) return `\\frac{${k===1?'':k}\\pi^2}{${d}}`;
+      if(Math.abs(pi2v+k/d)<0.003) return `-\\frac{${k===1?'':k}\\pi^2}{${d}}`;
+    }
+  }
+  // k/pi
+  const invpiv=v*Math.PI;
+  for(let k=1;k<=12;k++){
+    if(Math.abs(invpiv-k)<0.003)   return `\\frac{${k}}{\\pi}`;
+    if(Math.abs(invpiv+k)<0.003)   return `-\\frac{${k}}{\\pi}`;
+    for(let d=2;d<=6;d++){
+      if(Math.abs(invpiv-k/d)<0.003) return `\\frac{${k}}{${d}\\pi}`;
+      if(Math.abs(invpiv+k/d)<0.003) return `-\\frac{${k}}{${d}\\pi}`;
+    }
+  }
+  // k/pi^2
+  const invpi2v=v*Math.PI*Math.PI;
+  for(let k=1;k<=12;k++){
+    if(Math.abs(invpi2v-k)<0.003)   return `\\frac{${k}}{\\pi^2}`;
+    if(Math.abs(invpi2v+k)<0.003)   return `-\\frac{${k}}{\\pi^2}`;
+  }
+  return parseFloat(v.toFixed(5)).toString();
+}
+
+/* Detect pattern from coefficient array — always symbolic */
+function detectPatternTex(arr){
+  if(!arr||arr.slice(0,5).every(v=>Math.abs(v)<1e-7)) return '0';
+  const tol=n=>0.025*(Math.abs(n)||1)+0.002;
+  const [a1,a2,a3,a4,a5]=arr;
+
+  // Test a candidate formula f(n) against arr
+  function testFormula(fn){
+    for(let n=1;n<=5;n++){
+      try{
+        const got=fn(n), exp=arr[n-1];
+        if(isNaN(got)||!isFinite(got)||Math.abs(got-exp)>tol(exp)) return false;
+      }catch(e){return false;}
+    }
+    return true;
+  }
+
+  // C*(-1)^n / n^2
+  const C_a = -a1; // n=1: C*(-1)/1 => -C
+  if(Math.abs(C_a)>1e-7 && testFormula(n=>C_a*Math.pow(-1,n)/(n*n))){
+    return `\\dfrac{${nicePiFrac(C_a)}(-1)^{n}}{n^2}`;
+  }
+  // C*(-1)^(n+1) / n
+  const C_b = a1;
+  if(Math.abs(C_b)>1e-7 && testFormula(n=>C_b*Math.pow(-1,n+1)/n)){
+    return `\\dfrac{${nicePiFrac(C_b)}(-1)^{n+1}}{n}`;
+  }
+  // C*(-1)^n / n
+  const C_c = -a1;
+  if(Math.abs(C_c)>1e-7 && testFormula(n=>C_c*Math.pow(-1,n)/n)){
+    return `\\dfrac{${nicePiFrac(C_c)}(-1)^{n}}{n}`;
+  }
+  // C / n^2
+  if(Math.abs(a1)>1e-7 && testFormula(n=>a1/(n*n))){
+    return `\\dfrac{${nicePiFrac(a1)}}{n^2}`;
+  }
+  // C / n
+  if(Math.abs(a1)>1e-7 && testFormula(n=>a1/n)){
+    return `\\dfrac{${nicePiFrac(a1)}}{n}`;
+  }
+  // C*(-1)^n / n^3
+  const C_d = -a1;
+  if(Math.abs(C_d)>1e-7 && testFormula(n=>C_d*Math.pow(-1,n)/(n*n*n))){
+    return `\\dfrac{${nicePiFrac(C_d)}(-1)^{n}}{n^3}`;
+  }
+  // C*(-1)^(n+1) / n^3
+  const C_e = a1;
+  if(Math.abs(C_e)>1e-7 && testFormula(n=>C_e*Math.pow(-1,n+1)/(n*n*n))){
+    return `\\dfrac{${nicePiFrac(C_e)}(-1)^{n+1}}{n^3}`;
+  }
+  // C / n^3
+  if(Math.abs(a1)>1e-7 && testFormula(n=>a1/(n*n*n))){
+    return `\\dfrac{${nicePiFrac(a1)}}{n^3}`;
+  }
+
+  // SUM of two terms: A/n + B/n^3  (e.g. x^3 series)
+  // a_n = A/n + B/n^3  => a1=A+B, a2=A/2+B/8, a3=A/3+B/27
+  // Solve: A+B=a1, A/2+B/8=a2  => A=a1-B, (a1-B)/2+B/8=a2 => a1/2-B/2+B/8=a2 => a1/2-3B/8=a2 => B=(a1/2-a2)*8/3
+  {
+    const B=((a1/2)-a2)*(8/3), A=a1-B;
+    if(Math.abs(A)>1e-6||Math.abs(B)>1e-6){
+      if(testFormula(n=>A/n+B/(n*n*n))){
+        const Atex=nicePiFrac(A), Btex=nicePiFrac(B);
+        const part1=Math.abs(A)>1e-7?`\\dfrac{${Atex}}{n}`:'';
+        const sign=B>=0?'+':'-';
+        const part2=Math.abs(B)>1e-7?`${part1?sign+' ':''}\\dfrac{${nicePiFrac(Math.abs(B))}}{n^3}`:'';
+        return part1+part2 || '0';
+      }
+    }
+  }
+  // SUM: A*(-1)^(n+1)/n + B*(-1)^(n+1)/n^3
+  {
+    const B2=((a1/2)-a2)*(8/3), A2=a1-B2;
+    if(testFormula(n=>A2*Math.pow(-1,n+1)/n+B2*Math.pow(-1,n+1)/(n*n*n))){
+      const sign=B2>=0?'+':'-';
+      const part1=Math.abs(A2)>1e-7?`\\dfrac{${nicePiFrac(A2)}(-1)^{n+1}}{n}`:'';
+      const part2=Math.abs(B2)>1e-7?`${sign}\\dfrac{${nicePiFrac(Math.abs(B2))}(-1)^{n+1}}{n^3}`:'';
+      if(part1||part2) return part1+' '+part2;
+    }
+  }
+
+  // Fallback: show as symbolic sum of known pi-fractions at n=1,2,3
+  return `${nicePiFrac(a1)}\\text{(n=1)},\\;${nicePiFrac(a2)}\\text{(n=2)},\\;${nicePiFrac(a3)}\\text{(n=3)},\\;\\ldots`;
+}
+
+function buildFinalSeries(){
+  const {fStr,afmt,bfmt,Ltex,a0_v,an,bn,sym}=C;
+
+  const anPat = detectPatternTex(an);
+  const bnPat = detectPatternTex(bn);
+  const hasA0 = Math.abs(a0_v)>1e-7;
+  const hasAn = anPat!=='0' && Math.abs(an[0])>1e-7;
+  const hasBn = bnPat!=='0' && Math.abs(bn[0])>1e-7;
+
+  const a0halfTex = nicePiFrac(a0_v/2);
+
+  // Build sum term
+  let sumTex='';
+  if(hasAn&&hasBn) sumTex=`\\left[${anPat}\\cos\\frac{n\\pi x}{${Ltex}}+${bnPat}\\sin\\frac{n\\pi x}{${Ltex}}\\right]`;
+  else if(hasAn)   sumTex=`${anPat}\\cos\\frac{n\\pi x}{${Ltex}}`;
+  else if(hasBn)   sumTex=`${bnPat}\\sin\\frac{n\\pi x}{${Ltex}}`;
+
+  // Build full series RHS — use a0/2 + Σ[...] form cleanly
+  let fullTex = hasA0 ? a0halfTex : '';
+  if(sumTex) fullTex += (fullTex ? ' + ' : '') + `\\sum_{n=1}^{\\infty}${sumTex}`;
+  if(!fullTex) fullTex='0';
+
+  return `<div class="series-block"><div class="sb-label"><i class="fas fa-stream"></i>&nbsp; Derivation &amp; Final Series</div>
+    <div class="deriv-line">\\(\\displaystyle a_0 = \\frac{1}{${Ltex}}\\int_{${afmt}}^{${bfmt}}(${fStr})\\,dx${sym.ev?` = \\frac{2}{${Ltex}}\\int_0^{${bfmt}}(${fStr})\\,dx`:''}\\quad\\Rightarrow\\quad a_0 = ${nicePiFrac(a0_v)}\\)</div>
+    ${hasA0?`<div class="deriv-line">\\(\\dfrac{a_0}{2} = ${a0halfTex}\\)</div>`:'<div class="deriv-line">\\(a_0 = 0\\)</div>'}
+    ${hasAn
+      ?`<div class="deriv-line">\\(\\displaystyle a_n = \\frac{1}{${Ltex}}\\int_{${afmt}}^{${bfmt}}(${fStr})\\cos\\frac{n\\pi x}{${Ltex}}\\,dx${sym.ev?` = \\frac{2}{${Ltex}}\\int_0^{${bfmt}}(${fStr})\\cos\\frac{n\\pi x}{${Ltex}}\\,dx`:''}\\quad\\Rightarrow\\quad a_n = ${anPat}\\)</div>`
+      :`<div class="deriv-line">\\(a_n = 0\\)</div>`}
+    ${hasBn
+      ?`<div class="deriv-line">\\(\\displaystyle b_n = \\frac{1}{${Ltex}}\\int_{${afmt}}^{${bfmt}}(${fStr})\\sin\\frac{n\\pi x}{${Ltex}}\\,dx${sym.od?` = \\frac{2}{${Ltex}}\\int_0^{${bfmt}}(${fStr})\\sin\\frac{n\\pi x}{${Ltex}}\\,dx`:''}\\quad\\Rightarrow\\quad b_n = ${bnPat}\\)</div>`
+      :`<div class="deriv-line">\\(b_n = 0\\)</div>`}
+    <div class="series-final"><div class="sf-label">Fourier Series</div>
+      \\[f(x) = ${fullTex}, \\quad ${afmt} < x < ${bfmt}\\]</div>
+  </div>`;
+}
+
+function parseUser(str,nVal){
+  if(!str)return NaN;
+  try{
+    let s=str.replace(/\u03c0/g,'pi').trim();
+    const result=math.evaluate(s,{n:nVal,pi:Math.PI});
+    return typeof result==='number'?result:NaN;
+  }catch(e){return NaN;}
+}
+function showVR(id,ok,tex){
+  const el=document.getElementById(id); el.style.display='block';
+  if(ok){el.className='verify-result correct';el.innerHTML=`<span class="vr-icon">✅</span> <b>Correct!</b> Well done.`;}
+  else{el.className='verify-result wrong';el.innerHTML=`<span class="vr-icon">❌</span> <b>Incorrect.</b> Correct answer:<div class="ca-val">${tex}</div>`;setTimeout(()=>ts(el),60);}
+}
+function verifyA0(){
+  const raw=document.getElementById('ans_a0').value.trim(); if(!raw)return;
+  const uv=parseUser(raw,1);
+  const ok=!isNaN(uv)&&Math.abs(uv-C.a0_v)<0.05*(Math.abs(C.a0_v)||1)+0.002;
+  showVR('vr_a0',ok,`\\(a_0 = ${nicePiFrac(C.a0_v)}\\)`);
+}
+function verifyAn(){
+  const raw=document.getElementById('ans_an').value.trim(); if(!raw)return;
+  let ok=true;
+  for(let n=1;n<=5;n++){const uv=parseUser(raw,n),ex=C.an[n-1];if(isNaN(uv)||Math.abs(uv-ex)>0.05*(Math.abs(ex)||1)+0.002){ok=false;break;}}
+  showVR('vr_an',ok,`\\(a_n = ${detectPatternTex(C.an)}\\)`);
+}
+function verifyBn(){
+  const raw=document.getElementById('ans_bn').value.trim(); if(!raw)return;
+  let ok=true;
+  for(let n=1;n<=5;n++){const uv=parseUser(raw,n),ex=C.bn[n-1];if(isNaN(uv)||Math.abs(uv-ex)>0.05*(Math.abs(ex)||1)+0.002){ok=false;break;}}
+  showVR('vr_bn',ok,`\\(b_n = ${detectPatternTex(C.bn)}\\)`);
+}
+function resetAll(){
+  document.getElementById('stepArea').style.display='none';
+  document.getElementById('graphSection').style.display='none';
+  document.getElementById('errorMsg').style.display='none';
+  if(chartInst){chartInst.destroy();chartInst=null;}
+  currentStep=0;C={};
+  const nb=document.getElementById('btnNext');
+  nb.innerHTML='<i class="fas fa-arrow-right"></i> Next Step';nb.onclick=nextStep;
+}
+
+function nextStep(){if(currentStep<TOTAL_STEPS-1){currentStep++;renderProg();renderStep();}}
+function prevStep(){if(currentStep>0){currentStep--;renderProg();renderStep();}}
+function showGraph(){
+  const gs=document.getElementById('graphSection'); gs.style.display='block';
+  gs.scrollIntoView({behavior:'smooth'});
+  drawGraph(+document.getElementById('termsRange').value);
+  const nb=document.getElementById('btnNext');
+  nb.innerHTML='<i class="fas fa-sync-alt"></i> Redraw Graph';
+  nb.onclick=()=>drawGraph(+document.getElementById('termsRange').value);
+}
+function updateTerms(v){document.getElementById('termsVal').textContent=v;drawGraph(+v);}
+function drawGraph(N){
+  const {exprC,a,b,L,a0_v,an,bn}=C;
+  const pts=400,rng=b-a,lbl=[],orig=[],apx=[];
+  for(let i=0;i<=pts;i++){
+    const x=a+(i/pts)*rng; lbl.push(x.toFixed(3));
+    let y; try{y=evalF(exprC,x);}catch(e){y=0;}
+    orig.push(isFinite(y)?y:null);
+    let s=a0_v/2;
+    for(let n=1;n<=Math.min(N,an.length);n++){s+=an[n-1]*Math.cos(n*PI*x/L);s+=bn[n-1]*Math.sin(n*PI*x/L);}
+    apx.push(isFinite(s)?s:null);
+  }
+  const ctx=document.getElementById('fourierChart').getContext('2d');
+  if(chartInst)chartInst.destroy();
+  chartInst=new Chart(ctx,{type:'line',data:{labels:lbl,datasets:[
+    {label:'f(x)',data:orig,borderColor:'#e67e22',backgroundColor:'rgba(230,126,34,.08)',borderWidth:2.5,pointRadius:0,tension:.3,spanGaps:false},
+    {label:`Fourier (N=${N})`,data:apx,borderColor:'#2e86c1',backgroundColor:'rgba(46,134,193,.07)',borderWidth:2,pointRadius:0,borderDash:[7,4],tension:.2,spanGaps:false}
+  ]},options:{responsive:true,
+    plugins:{legend:{labels:{color:'#1e2d45',font:{family:'DM Sans',size:13}}},
+      tooltip:{mode:'index',intersect:false,backgroundColor:'#fff',titleColor:'#1a2456',bodyColor:'#5a6a85',borderColor:'#cdd5e8',borderWidth:1}},
+    scales:{
+      x:{ticks:{color:'#5a6a85',maxTicksLimit:12,font:{size:11}},grid:{color:'rgba(26,36,86,.06)'}},
+      y:{ticks:{color:'#5a6a85',font:{size:11}},grid:{color:'rgba(26,36,86,.08)'}}
+    },animation:{duration:300}}});
+}
+</script>
+</body>
+</html>
